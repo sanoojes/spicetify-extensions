@@ -19,13 +19,14 @@ const customStyles = `
 }
 
 .Root__globalNav>* {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .Root__globalNav {
+  --library-bg-color: var(--spice-sidebar, var(--spice-main));
   height: unset;
-  background-color: var(--spice-main);
+  background-color: var(--library-bg-color);
   border-radius: 8px;
   padding-inline: unset !important;
   align-items: unset;
@@ -94,7 +95,7 @@ const customStyles = `
 .main-globalNav-iconText:not(.main-globalNav-link-icon) {
   font-size: 1rem;
   font-weight: 700;
-  margin-inline-start: 12px;
+  margin-inline-start: 0.5rem;
 }
 
 .main-globalNav-historyButtons,
@@ -116,7 +117,8 @@ const customStyles = `
 }
 
 .main-globalNav-navLinkActive {
-  background-color: var(--spice-card) !important;
+  --library-bg-color: var(--spice-card);
+  background-color: var(--library-bg-color) !important;
   border-radius: 0.5rem !important;
 }
 
@@ -188,7 +190,8 @@ const customStyles = `
 
 .main-globalNav-searchInputContainer .SFAoASy0S_LZJmYZ3Fh9:hover,
 .main-globalNav-searchInputContainer input:hover {
-  background-color: var(--spice-card) !important;
+  --library-bg-color: var(--spice-card);
+  background-color: var(--library-bg-color) !important;
 }
 
 .searchInputCollapsed .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
