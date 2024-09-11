@@ -241,6 +241,10 @@ const addGlobalNavStyles = () => {
 };
 
 (async () => {
+  while (!Spicetify?.showNotification) {
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
   try {
     console.log('Running GlobalNav to LibraryX script...');
 
@@ -285,15 +289,18 @@ const addGlobalNavStyles = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         checkGlobalNav();
       } else {
-        console.error(
-          'GlobalNav to Library Script is not available on this nav mode.'
-        );
+        const msg =
+          'GlobalNav to Library Script is not available on this nav mode.';
+        console.error(msg);
+        Spicetify.showNotification(msg, true);
       }
     };
 
     await checkGlobalNav();
   } catch (error) {
-    console.error('Error running GlobalNav to LibraryX script:', error);
+    const msg = `Error running GlobalNav to LibraryX script:${error}`;
+    console.error(msg);
+    Spicetify.showNotification(msg, true);
   }
 })();
 
