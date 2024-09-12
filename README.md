@@ -1,6 +1,6 @@
 # Spicetify Extensions
 
-This repository contains a Spicetify extension created by me. [Sanooj Es](github.com/sanoojes)
+This repository contains a Spicetify extension created by [me](github.com/sanoojes).
 
 ## LibX Reborn
 
