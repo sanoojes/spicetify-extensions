@@ -18,14 +18,29 @@ const customStyles = `
   grid-template-rows: auto 1fr auto;
 }
 
-.Root__globalNav>* {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+
+.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
+.Root__globalNav {
+  padding-inline-end: 0 !important;
+  padding-inline-start: 0 !important;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+  padding-block-end: 0 !important;
+  padding-block-start: 0 !important;
+  padding: 0.5rem !important;
 }
 
+.Root__globalNav>div {
+  padding-left: 0.25rem !important;
+}
+
+.Root__globalNav button {}
+
 .Root__globalNav {
-  --library-bg-color: var(--spice-sidebar, var(--spice-main));
+  --library-bg-color: var(--background-base, var(--spice-main));
   height: unset;
+  max-width: calc(var(--left-sidebar-width) *1px);
+  width: calc(var(--left-sidebar-width) *1px);
   background-color: var(--library-bg-color);
   border-radius: 8px;
   padding-inline: unset !important;
@@ -33,12 +48,18 @@ const customStyles = `
   padding: 8px;
 }
 
+
 .Root__globalNav .main-globalNav-link-icon {
   background-color: unset;
   transform: unset;
   justify-content: unset;
   height: 3.25rem;
   max-height: 3.25rem;
+}
+
+.Root__nav-bar .LayoutResizer__resize-bar {
+  height: 82vh;
+  bottom: 0;
 }
 
 .main-actionButtons {
@@ -66,10 +87,6 @@ const customStyles = `
 
 .main-globalNav-searchSection {
   order: -1;
-}
-
-.main-globalNav-searchInputSection {
-  margin-inline: unset;
 }
 
 .Root__globalNav .Dp3xccI7c2f_JSJ8OHYu {
@@ -108,11 +125,35 @@ const customStyles = `
   width: max-content;
 }
 
-.main-globalNav-historyButtons {
-  left: 4vw;
+
+.main-globalNav-searchInputSection {
+  position: fixed;
+  top: var(--panel-gap);
+  left: 1vw;
+  max-width: 20rem;
+  margin-inline: unset;
+  left: 5rem;
+}
+
+.spotify__container--is-desktop.spotify__os--is-macos .main-globalNav-searchInputSection,
+.spotify__container--is-desktop.spotify__os--is-windows .main-globalNav-searchInputSection {
+  left: 10rem;
+}
+
+.Root__globalNav .main-globalNav-historyButtons {
+  left: var(--panel-gap);
+}
+
+.spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav .main-globalNav-historyButtons,
+.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav .main-globalNav-historyButtons {
+  left: 5rem;
 }
 
 .Root__globalNav .main-topBar-topbarContentRight {
+  right: var(--panel-gap);
+}
+
+.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav .main-topBar-topbarContentRight {
   right: 10vw;
 }
 
@@ -122,7 +163,13 @@ const customStyles = `
   border-radius: 0.5rem !important;
 }
 
+#main:has(.oZT8iKL42zhLAm_zE5F5) .main-globalNav-textWrapper {
+  display: none;
+}
+
 .Root__globalNav {
+  display: flex;
+  overflow: hidden;
   --card-gap: 0.25rem;
 }
 
@@ -157,6 +204,7 @@ const customStyles = `
 .Root__globalNav .main-globalNav-searchInputSection {
   display: flex;
   align-items: center;
+  z-index: var(--above-main-and-now-playing-view-grid-area, 6);
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputSection .main-globalNav-textWrapper {
@@ -182,11 +230,9 @@ const customStyles = `
   align-items: center;
 }
 
-.main-globalNav-searchInputSection,
-.searchInputCollapsed:not(.forceExpandSearchInput) .main-globalNav-searchInputSection>.main-globalNav-searchInputContainer {
-  width: 100% !important;
+.forceExpandSearchInput .main-globalNav-searchInputContainer input {
+  border: 1px solid var(--background-elevated-base);
 }
-
 
 .main-globalNav-searchInputContainer .SFAoASy0S_LZJmYZ3Fh9:hover,
 .main-globalNav-searchInputContainer input:hover {
@@ -202,16 +248,11 @@ const customStyles = `
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
 }
-
-:root {
-  /* Set sidebar width as 360px for now */
-  --left-sidebar-width: 360 !important;
-}
 `;
 
 const addGlobalNavStyles = () => {
   const elements = document.querySelectorAll(
-    '.Root__globalNav .search-searchCategory-categoryGrid > div > button, .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon, .Root__globalNav .main-globalNav-searchInputSection'
+    '.Root__globalNav .search-searchCategory-categoryGrid > div > button, .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon'
   );
 
   for (const element of elements) {
@@ -252,7 +293,7 @@ const addGlobalNavStyles = () => {
   }
 
   try {
-    console.log('Running GlobalNav to LibraryX script...');
+    console.log('[LibX-Reborn] Running GlobalNav to LibraryX script...');
 
     let attempts = 0;
     const maxAttempts = 3;
@@ -297,7 +338,7 @@ const addGlobalNavStyles = () => {
         checkGlobalNav();
       } else {
         const msg =
-          'GlobalNav to Library Script is not available on this nav mode.';
+          '[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.';
         console.error(msg);
         Spicetify.showNotification(msg, true);
       }
@@ -305,7 +346,7 @@ const addGlobalNavStyles = () => {
 
     await checkGlobalNav();
   } catch (error) {
-    const msg = `Error running GlobalNav to LibraryX script:${error}`;
+    const msg = `[LibX-Reborn] Error running GlobalNav to LibraryX script:${error}`;
     console.error(msg);
     Spicetify.showNotification(msg, true);
   }
