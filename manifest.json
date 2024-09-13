@@ -2,9 +2,9 @@
   {
     "name": "LibX Reborn",
     "description": "Designed to bring back the classic Library X view to Spotify, which was removed in the Nav redesign introduced with Spotify 1.2.46.",
-    "preview": "LibX-Reborn/assets/sc2.png",
+    "preview": "https://sanooj.is-a.dev/spicetify-extensions/LibXLibX-Reborn/assets/sc2.png",
     "main": "https://sanooj.is-a.dev/spicetify-extensions/LibX-Reborn/src/LibX-Reborn.js",
-    "readme": "LibX-Reborn/README.md",
+    "readme": "https://sanooj.is-a.dev/spicetify-extensions/LibX-Reborn/README.md",
     "tags": ["interface", "global-nav", "nav"]
   }
 ]
