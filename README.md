@@ -19,7 +19,7 @@ Enjoy a familiar and convenient way to manage your music library with LibX Rebor
 
 ### **Installation:**
 
-1. **Download:** Download the latest version of the LibX Reborn extension: [Download LibX Reborn](https://github.com/sanoojes/spicetify-extensions/raw/master/LibX-Reborn/src/LibX-Reborn.js)
+1. **Download:** Download the latest version of the LibX Reborn extension: [Download LibX Reborn](https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/src/LibX-Reborn.js)
 2. **Locate Spicetify Config Folder:** Open your Spicetify Config folder, typically located at:
    - **macOS/Linux:** `~/.config/spicetify/`
    - **Windows:** `%AppData%\Roaming\spicetify`
