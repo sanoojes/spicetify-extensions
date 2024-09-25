@@ -16,6 +16,9 @@ Enjoy a familiar and convenient way to manage your music library with LibX Rebor
 
 ![LibX Reborn Screenshot](./LibX-Reborn/assets/sc1.png)
 ![LibX Reborn Screenshot](./LibX-Reborn/assets/sc2.png)
+![LibX Reborn Screenshot](./LibX-Reborn/assets/sc3.png)
+![LibX Reborn Screenshot](./LibX-Reborn/assets/sc4.png)
+![LibX Reborn Screenshot](./LibX-Reborn/assets/sc5.png)
 
 ### **Installation:**
 
