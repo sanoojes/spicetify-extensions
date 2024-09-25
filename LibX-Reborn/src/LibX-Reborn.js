@@ -272,8 +272,6 @@ const addGlobalNavStyles = () => {
   );
 
   for (const element of elements) {
-    const isSearchElement =
-      element.querySelector('input') || element.querySelector('form');
     const textElement = element.querySelector(
       '.main-globalNav-searchText.encore-text.encore-text-body-medium-bold'
     );
@@ -282,24 +280,12 @@ const addGlobalNavStyles = () => {
       const newTextElement = document.createElement('div');
       newTextElement.className =
         'main-globalNav-searchText encore-text encore-text-body-medium-bold';
-      newTextElement.textContent =
-        element.getAttribute('aria-label') ||
-        (isSearchElement ? 'Search' : '') ||
-        '';
+      newTextElement.textContent = element.getAttribute('aria-label') || '';
       const newTextWrapperElement = document.createElement('span');
       newTextWrapperElement.className = 'main-globalNav-textWrapper';
       newTextWrapperElement.appendChild(newTextElement);
 
-      if (isSearchElement) {
-        const iconElement = element.querySelector(
-          '.main-globalNav-searchInputContainer>:first-child'
-        );
-        iconElement
-          ? iconElement.appendChild(newTextWrapperElement)
-          : element.appendChild(newTextWrapperElement);
-      } else {
-        element.appendChild(newTextWrapperElement);
-      }
+      element.appendChild(newTextWrapperElement);
     }
   }
 };
