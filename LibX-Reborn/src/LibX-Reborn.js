@@ -36,7 +36,9 @@ const customStyles = `
   padding-left: 0.25rem !important;
 }
 
-.Root__globalNav button {}
+.Root__globalNav .main-globalNav-link-icon > span > svg {
+    margin-left: 2px;
+}
 
 .Root__globalNav {
   --library-bg-color: var(--background-base, var(--spice-main));
