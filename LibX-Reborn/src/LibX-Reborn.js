@@ -127,7 +127,7 @@ const customStyles = `
   width: max-content;
 }
 
-
+.zugTpa7GhjPIQmTCgBzw,
 .main-globalNav-searchInputSection {
   position: fixed;
   top: var(--panel-gap);
@@ -137,6 +137,8 @@ const customStyles = `
   left: 5rem;
 }
 
+.spotify__container--is-desktop.spotify__os--is-macos .zugTpa7GhjPIQmTCgBzw,
+.spotify__container--is-desktop.spotify__os--is-windows .zugTpa7GhjPIQmTCgBzw,
 .spotify__container--is-desktop.spotify__os--is-macos .main-globalNav-searchInputSection,
 .spotify__container--is-desktop.spotify__os--is-windows .main-globalNav-searchInputSection {
   left: 10rem;
