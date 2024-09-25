@@ -272,7 +272,8 @@ const addGlobalNavStyles = () => {
   );
 
   for (const element of elements) {
-    const isSearchElement = element.querySelector('input');
+    const isSearchElement =
+      element.querySelector('input') || element.querySelector('form');
     const textElement = element.querySelector(
       '.main-globalNav-searchText.encore-text.encore-text-body-medium-bold'
     );
