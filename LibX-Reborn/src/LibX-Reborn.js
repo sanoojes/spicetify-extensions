@@ -1,4 +1,5 @@
 const GLOBAL_NAV_SELECTOR = '.Root__globalNav';
+const GLOBAL_NAV_SELECTOR_CLASS = 'global-libraryX';
 
 const checkForGlobalNav = () =>
   document.querySelector('.globalNav') ||
@@ -8,6 +9,8 @@ const checkForGlobalNav = () =>
 let isGlobalNavAvailable = checkForGlobalNav();
 
 const customStyles = `
+.spotify__container--is-desktop .global-nav .Root__top-container:has(> .global-libraryX),
+.Root__top-container:has(> .global-libraryX),
 .Root__top-container {
   padding-top: 64px !important;
   grid-template-areas:
@@ -17,7 +20,6 @@ const customStyles = `
 
   grid-template-rows: auto 1fr auto;
 }
-
 
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
 .Root__globalNav {
@@ -244,13 +246,25 @@ const customStyles = `
   visibility: hidden;
 }
 
+.global-libraryX .main-globalNav-searchInputSection{
+  min-width: 25vw;
+  /* max-width: 25vw; */
+}
+
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
 }
 `;
 
+function addLibXClasses() {
+  const globalNavElement = document.querySelector(GLOBAL_NAV_SELECTOR);
+  globalNavElement.classList.add(GLOBAL_NAV_SELECTOR_CLASS);
+}
+
 const addGlobalNavStyles = () => {
+  addLibXClasses();
+
   const elements = document.querySelectorAll(
     '.Root__globalNav .search-searchCategory-categoryGrid > div > button, .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon'
   );
@@ -323,7 +337,8 @@ const addGlobalNavStyles = () => {
         setTimeout(() => {
           const observer = new MutationObserver(addGlobalNavStyles);
           const globalNavElement = document.querySelector(GLOBAL_NAV_SELECTOR);
-          globalNavElement.classList.add('global-libraryX');
+          addLibXClasses();
+
           if (globalNavElement) {
             observer.observe(globalNavElement, {
               childList: true,
@@ -351,4 +366,3 @@ const addGlobalNavStyles = () => {
     Spicetify.showNotification(msg, true);
   }
 })();
-
