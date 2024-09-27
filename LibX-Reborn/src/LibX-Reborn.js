@@ -133,7 +133,6 @@ const customStyles = `
 .main-globalNav-searchInputSection {
   position: fixed;
   top: var(--panel-gap);
-  left: 1vw;
   max-width: 20rem;
   margin-inline: unset;
   left: 5rem;
@@ -261,16 +260,43 @@ const customStyles = `
 }
 `;
 
-function addLibXClasses() {
+const addLibXClasses = () => {
   const globalNavElement = document.querySelector(GLOBAL_NAV_SELECTOR);
   globalNavElement.classList.add(GLOBAL_NAV_SELECTOR_CLASS);
-}
+};
+
+const detectOS = (os_name) => {
+  if (Spicetify.Platform?.operatingSystem)
+    return Spicetify.Platform?.operatingSystem
+      .toLowerCase()
+      .includes(os_name.toLowerCase());
+
+  if (Spicetify.Platform?.PlatformData?.os_name)
+    return Spicetify.Platform.PlatformData.os_name
+      .toLowerCase()
+      .includes(os_name.toLowerCase());
+
+  return false;
+};
+
+const gapPx = 8; // in px
+const setElementPos = (searchElement, value = { left: 0, top: gapPx }) => {
+  if (searchElement)
+    searchElement?.setAttribute(
+      'style',
+      `left: ${value.left}px !important; position: fixed !important; top: ${value.top} !important;`
+    );
+};
 
 const addGlobalNavStyles = () => {
+  const isWindows = detectOS('win');
+  const isMac = detectOS('mac');
+
   addLibXClasses();
 
   const elements = document.querySelectorAll(
-    '.Root__globalNav .search-searchCategory-categoryGrid > div > button, .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon'
+    `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
+    .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon`
   );
 
   for (const element of elements) {
@@ -282,12 +308,42 @@ const addGlobalNavStyles = () => {
       const newTextElement = document.createElement('div');
       newTextElement.className =
         'main-globalNav-searchText encore-text encore-text-body-medium-bold';
-      newTextElement.textContent = element.getAttribute('aria-label') || '';
+      newTextElement.textContent =
+        element.getAttribute('aria-label') || element.getAttribute('alt') || '';
       const newTextWrapperElement = document.createElement('span');
       newTextWrapperElement.className = 'main-globalNav-textWrapper';
       newTextWrapperElement.appendChild(newTextElement);
 
       element.appendChild(newTextWrapperElement);
+    }
+  }
+
+  const historyButtonsElement = document.querySelector(
+    '.Root__globalNav .main-globalNav-historyButtonsContainer>.main-globalNav-historyButtons'
+  );
+  if (historyButtonsElement) {
+    const historyButtonsWidth = historyButtonsElement.clientWidth || 80;
+
+    const searchElement = document.querySelector(
+      `.Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>span[role='presentation'],
+      .Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw`
+    );
+
+    if (searchElement) {
+      if (isWindows) {
+        setElementPos(historyButtonsElement, { left: 64 + gapPx, top: 0 });
+        setElementPos(searchElement, {
+          left: historyButtonsWidth + 64,
+        });
+      } else if (isMac) {
+        setElementPos(historyButtonsElement, { left: 80 + gapPx, top: 0 });
+        setElementPos(searchElement, {
+          left: historyButtonsWidth + 80,
+        });
+      } else {
+        setElementPos(historyButtonsElement, { left: gapPx, top: 0 });
+        setElementPos(searchElement, historyButtonsWidth);
+      }
     }
   }
 };
