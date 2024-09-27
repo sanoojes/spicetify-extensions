@@ -284,7 +284,7 @@ const setElementPos = (searchElement, value = { left: 0, top: gapPx }) => {
   if (searchElement)
     searchElement?.setAttribute(
       'style',
-      `left: ${value.left}px !important; position: fixed !important; top: ${value.top} !important;`
+      `left: ${value.left}px !important; position: fixed !important; top: ${value.top}px !important;`
     );
 };
 
@@ -334,15 +334,20 @@ const addGlobalNavStyles = () => {
         setElementPos(historyButtonsElement, { left: 64 + gapPx, top: 0 });
         setElementPos(searchElement, {
           left: historyButtonsWidth + 64,
+          top: gapPx,
         });
       } else if (isMac) {
         setElementPos(historyButtonsElement, { left: 80 + gapPx, top: 0 });
         setElementPos(searchElement, {
           left: historyButtonsWidth + 80,
+          top: gapPx,
         });
       } else {
         setElementPos(historyButtonsElement, { left: gapPx, top: 0 });
-        setElementPos(searchElement, historyButtonsWidth);
+        setElementPos(searchElement, {
+          left: historyButtonsWidth + gapPx,
+          top: 0,
+        });
       }
     }
   }
