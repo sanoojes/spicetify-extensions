@@ -384,6 +384,7 @@ const addGlobalNavStyles = () => {
 
         // Initial toggle
         addGlobalNavStyles();
+        setTimeout(addGlobalNavStyles(), 2000);
 
         // Wait for 200ms then start observing changes
         setTimeout(() => {
