@@ -18,6 +18,7 @@ let globalNavElement = getGlobalNavElement();
 
 const customStyles = `
 .Root__top-container,
+:root .global-nav .Root__top-container,
 .spotify__container--is-desktop .global-nav .Root__top-container {
   padding-top: 64px !important;
   grid-template-areas:
@@ -32,6 +33,7 @@ const customStyles = `
 .Root__globalNav {
   transition: width 0.3s ease;
 }
+
 .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
@@ -239,7 +241,7 @@ const customStyles = `
   flex-direction: row;
   display: flex;
   align-items: center;
-  text-wrap: no-wrap;
+  text-wrap: nowrap;
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputContainer input {
