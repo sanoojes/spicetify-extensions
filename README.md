@@ -20,16 +20,46 @@ Enjoy a familiar and convenient way to manage your music library with LibX Rebor
 ![LibX Reborn Screenshot](./LibX-Reborn/assets/sc4.png)
 ![LibX Reborn Screenshot](./LibX-Reborn/assets/sc5.png)
 
-### **Installation:**
+### Installation:
 
-1. **Download:** Download the latest version of the LibX Reborn extension: [Download LibX Reborn](https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/remote/LibX-Reborn.js)
-2. **Locate Spicetify Config Folder:** Open your Spicetify Config folder, typically located at:
-   - **macOS/Linux:** `~/.config/spicetify/`
-   - **Windows:** `%AppData%\Roaming\spicetify`
-3. **Place Extension File:** Navigate to the "Extensions" folder within the Spicetify Config folder and place the downloaded `LibX-Reborn.js` file inside.
-4. **Install:** Open your terminal (or Command Prompt on Windows) and run the command: `spicetify config extensions LibX-Reborn.js`
-5. **Apply Changes:** Run the command: `spicetify apply`
-6. **Restart Spotify:** Restart Spotify for the changes to take effect.
+- **Easiest Method - Install from Spicetify Marketplace:**
+      - Search for "LibX Reborn" in your Spicetify Marketplace and click install.  (This requires having the Marketplace custom app set up).
+
+#### **Manual Installation:** 
+1. **Download LibX Reborn:**
+   - **For Automatic Updates (Recommended):** 
+     - Click this link to download the **remote** version: [https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/remote/LibX-Reborn.js](https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/remote/LibX-Reborn.js) 
+     - This version automatically fetches the latest updates.
+   - **For Local Installation:**
+     - Click this link to download the **local** version: [https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/src/LibX-Reborn.js](https://raw.githubusercontent.com/sanoojes/spicetify-extensions/master/LibX-Reborn/src/LibX-Reborn.js) 
+   - Save the file as `LibX-Reborn.js` in a location you can easily access (only if manually installing).
+
+2. **Open Spicetify Extensions Folder:**
+   - **macOS/Linux:** Open a terminal and run: `xdg-open ~/.config/spicetify/Extensions` (or navigate manually to `~/.config/spicetify/Extensions`).
+   - **Windows:** Open a Run dialog (Win + R), paste `%AppData%\Roaming\spicetify\Extensions` and press Enter.
+
+3. **Place Extension File:**
+   - Move or copy the downloaded `LibX-Reborn.js` file into the opened "Extensions" folder.
+
+4. **Enable the Extension:**
+   - Open a terminal or command prompt and run: `spicetify config extensions LibX-Reborn.js`
+
+5. **Apply Changes & Restart:**
+   - Run the command: `spicetify apply`
+   - Fully close and reopen Spotify for the LibX Reborn extension to take effect. 
+
+### Uninstallation:
+
+1. **Remove the Extension File:**
+   - Navigate back to your Spicetify "Extensions" folder (see step 2 of Installation).
+   - Delete the `LibX-Reborn.js` file.
+
+2. **Disable the Extension:**
+   - Open your terminal or command prompt and run: `spicetify config extensions LibX-Reborn.js-`
+
+3. **Apply Changes & Restart:**
+   - Run the command: `spicetify apply`
+   - Fully close and reopen Spotify to complete the uninstallation process.
 
 ### **Usage:**
 
