@@ -1,26 +1,39 @@
-const GLOBAL_NAV_SELECTOR = '.Root__globalNav';
-const GLOBAL_NAV_SELECTOR_CLASS = 'global-libraryX';
+const config = {
+  defaultGap: 8,
+  globalNavSelector: '.Root__globalNav',
+  libXGlobalNavSelectorClass: 'global-libraryX',
+  stylesheetSelectorClass: 'libraryX-styles',
+};
 
 const checkForGlobalNav = () =>
   document.querySelector('.globalNav') ||
   document.querySelector('.Root__globalNav') ||
   false;
 
+let isWindows = detectOS('win');
+let isMac = detectOS('mac');
+
 let isGlobalNavAvailable = checkForGlobalNav();
+let globalNavElement = getGlobalNavElement();
 
 const customStyles = `
-.spotify__container--is-desktop .global-nav .Root__top-container:has(> .global-libraryX),
-.Root__top-container:has(> .global-libraryX),
-.Root__top-container {
+.Root__top-container,
+.spotify__container--is-desktop .global-nav .Root__top-container {
   padding-top: 64px !important;
   grid-template-areas:
     "global-nav main-view right-sidebar"
     "left-sidebar main-view right-sidebar"
     "now-playing-bar now-playing-bar now-playing-bar" !important;
 
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto !important;
 }
 
+#Desktop_LeftSidebar_Id,
+.Root__globalNav {
+  transition: width 0.3s ease;
+}
+.Root__globalNav,
+.spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
 .Root__globalNav {
   padding-inline-end: 0 !important;
@@ -30,14 +43,6 @@ const customStyles = `
   padding-block-end: 0 !important;
   padding-block-start: 0 !important;
   padding: 0.5rem !important;
-}
-
-.Root__globalNav>div {
-  padding-left: 0.25rem !important;
-}
-
-.Root__globalNav .main-globalNav-link-icon > span > svg {
-    margin-left: 2px;
 }
 
 .Root__globalNav {
@@ -59,6 +64,8 @@ const customStyles = `
   justify-content: unset;
   height: 3.25rem;
   max-height: 3.25rem;
+  padding: 1rem;
+  border: none !important;
 }
 
 .Root__nav-bar .LayoutResizer__resize-bar {
@@ -124,38 +131,37 @@ const customStyles = `
   position: fixed !important;
   display: flex !important;
   top: 0;
-  padding: var(--panel-gap);
+  padding: 0.5rem;
   height: max-content;
   width: max-content;
+}
+
+._b3hhmbWtOY8_1M1mM1H {
+  margin-inline: 0;
 }
 
 .zugTpa7GhjPIQmTCgBzw,
 .main-globalNav-searchInputSection {
   position: fixed;
-  top: var(--panel-gap);
-  max-width: 20rem;
+  top: 0.5rem;
+  max-width: 25vw;
   margin-inline: unset;
-  left: 5rem;
-}
-
-.spotify__container--is-desktop.spotify__os--is-macos .zugTpa7GhjPIQmTCgBzw,
-.spotify__container--is-desktop.spotify__os--is-windows .zugTpa7GhjPIQmTCgBzw,
-.spotify__container--is-desktop.spotify__os--is-macos .main-globalNav-searchInputSection,
-.spotify__container--is-desktop.spotify__os--is-windows .main-globalNav-searchInputSection {
-  left: 10rem;
 }
 
 .Root__globalNav .main-globalNav-historyButtons {
-  left: var(--panel-gap);
+  top: 0 !important;
+  left: var(--history-button-left, var(--panel-gap, 0.5rem)) !important;
 }
 
-.spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav .main-globalNav-historyButtons,
-.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav .main-globalNav-historyButtons {
-  left: 5rem;
+.Root__globalNav .main-globalNav-searchContainer>span:nth-child(2),
+.Root__globalNav .main-globalNav-searchContainer>span[role='presentation'],
+.Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw {
+  top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
+  left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
 }
 
 .Root__globalNav .main-topBar-topbarContentRight {
-  right: var(--panel-gap);
+  right: 0.5rem;
 }
 
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav .main-topBar-topbarContentRight {
@@ -233,6 +239,7 @@ const customStyles = `
   flex-direction: row;
   display: flex;
   align-items: center;
+  text-wrap: no-wrap;
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputContainer input {
@@ -249,7 +256,7 @@ const customStyles = `
   visibility: hidden;
 }
 
-.global-libraryX .main-globalNav-searchInputSection{
+.global-libraryX .main-globalNav-searchInputSection {
   min-width: 25vw;
   /* max-width: 25vw; */
 }
@@ -257,72 +264,16 @@ const customStyles = `
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
-}
-`;
+}`;
 
-const addLibXClasses = () => {
-  const globalNavElement = document.querySelector(GLOBAL_NAV_SELECTOR);
-  globalNavElement.classList.add(GLOBAL_NAV_SELECTOR_CLASS);
-};
-
-const detectOS = (os_name) => {
-  if (Spicetify.Platform?.operatingSystem)
-    return Spicetify.Platform?.operatingSystem
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
-
-  if (Spicetify.Platform?.PlatformData?.os_name)
-    return Spicetify.Platform.PlatformData.os_name
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
-
-  return false;
-};
-
-const gapPx = 8; // in px
-const setElementPos = (searchElement, value = { left: 0, top: gapPx }) => {
-  if (searchElement)
-    searchElement?.setAttribute(
-      'style',
-      `left: ${value.left}px !important; position: fixed !important; top: ${value.top}px !important;`
-    );
-};
-
-const addGlobalNavStyles = () => {
-  const isWindows = detectOS('win');
-  const isMac = detectOS('mac');
-
-  addLibXClasses();
-
-  const elements = document.querySelectorAll(
-    `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
-    .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon`
-  );
-
-  for (const element of elements) {
-    const textElement = element.querySelector(
-      '.main-globalNav-searchText.encore-text.encore-text-body-medium-bold'
-    );
-
-    if (!textElement) {
-      const newTextElement = document.createElement('div');
-      newTextElement.className =
-        'main-globalNav-searchText encore-text encore-text-body-medium-bold';
-      newTextElement.textContent =
-        element.getAttribute('aria-label') || element.getAttribute('alt') || '';
-      const newTextWrapperElement = document.createElement('span');
-      newTextWrapperElement.className = 'main-globalNav-textWrapper';
-      newTextWrapperElement.appendChild(newTextElement);
-
-      element.appendChild(newTextWrapperElement);
-    }
-  }
-
+const setElementPositions = () => {
   const historyButtonsElement = document.querySelector(
     '.Root__globalNav .main-globalNav-historyButtonsContainer>.main-globalNav-historyButtons'
   );
   if (historyButtonsElement) {
-    const historyButtonsWidth = historyButtonsElement.clientWidth || 80;
+    const historyButtonsWidth =
+      historyButtonsElement.getBoundingClientRect().x +
+        historyButtonsElement.getBoundingClientRect().width || 80;
 
     const searchElement = document.querySelector(
       `.Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>span[role='presentation'],
@@ -331,28 +282,141 @@ const addGlobalNavStyles = () => {
 
     if (searchElement) {
       if (isWindows) {
-        setElementPos(historyButtonsElement, { left: 64 + gapPx, top: 0 });
-        setElementPos(searchElement, {
-          left: historyButtonsWidth + 64,
-          top: gapPx,
+        setElementPositionProperties('history-button', {
+          left: 64 + config.defaultGap,
+        });
+        setElementPositionProperties('search-container', {
+          left: historyButtonsWidth + config.defaultGap,
+          top: config.defaultGap,
         });
       } else if (isMac) {
-        setElementPos(historyButtonsElement, { left: 80 + gapPx, top: 0 });
-        setElementPos(searchElement, {
-          left: historyButtonsWidth + 80,
-          top: gapPx,
+        setElementPositionProperties('history-button', {
+          left: 80 + config.defaultGap,
+        });
+        setElementPositionProperties('search-container', {
+          left: historyButtonsWidth + config.defaultGap,
+          top: config.defaultGap,
         });
       } else {
-        setElementPos(historyButtonsElement, { left: gapPx, top: 0 });
-        setElementPos(searchElement, {
-          left: historyButtonsWidth + gapPx,
-          top: 0,
+        setElementPositionProperties('history-button', {
+          left: config.defaultGap,
+        });
+        setElementPositionProperties('search-container', {
+          left: historyButtonsWidth + config.defaultGap,
         });
       }
     }
   }
 };
 
+const addButtonText = () => {
+  const buttonElements = document.querySelectorAll(
+    `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
+    .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon`
+  );
+
+  for (const element of buttonElements) {
+    if (
+      element.querySelector(
+        `.main-globalNav-textWrapper,
+        .main-globalNav-searchText.encore-text.encore-text-body-medium-bold`
+      )
+    )
+      return;
+
+    const newTextElement = document.createElement('div');
+    newTextElement.className =
+      'main-globalNav-searchText encore-text encore-text-body-medium-bold';
+    newTextElement.textContent =
+      element.getAttribute('aria-label') || element.getAttribute('alt') || '';
+    const newTextWrapperElement = document.createElement('span');
+    newTextWrapperElement.className = 'main-globalNav-textWrapper';
+    newTextWrapperElement.appendChild(newTextElement);
+
+    element.appendChild(newTextWrapperElement);
+  }
+};
+
+const addGlobalNavStyles = () => {
+  setElementPositions();
+  addButtonText();
+  addLibXClasses();
+};
+
+const attachGlobalNavObserver = () => {
+  const globalNavObserver = new MutationObserver(addGlobalNavStyles);
+
+  const globalNavButtonWrapperElement = document.querySelector(
+    '.Root__globalNav .main-globalNav-historyButtonsContainer'
+  );
+
+  if (globalNavButtonWrapperElement) {
+    globalNavObserver.observe(globalNavButtonWrapperElement, {
+      childList: true,
+      subtree: true,
+    });
+  } else {
+    globalNavObserver.disconnect();
+  }
+};
+
+const setElementCustomProperty = (
+  element,
+  propertyName,
+  value,
+  unit = 'px'
+) => {
+  if (!element) return;
+
+  element.style.setProperty(`--${propertyName}`, `${value}${unit}`);
+};
+
+const setElementPositionProperties = (
+  propertyName,
+  position = { left: 0, top: config.defaultGap, right: 0, bottom: 0 }
+) => {
+  if (!globalNavElement) return;
+
+  for (const [key, value] of Object.entries(position)) {
+    setElementCustomProperty(globalNavElement, `${propertyName}-${key}`, value);
+  }
+};
+
+/**
+ * Adds libX class name to GlobalNav
+ */
+const addLibXClasses = () => {
+  try {
+    globalNavElement = getGlobalNavElement();
+    if (globalNavElement)
+      globalNavElement.classList.add(config.libXGlobalNavSelectorClass);
+  } catch (error) {
+    console.error(
+      `[LibX-Reborn] Error adding class to global nav element: ${error.message}`
+    );
+  }
+};
+
+/**
+ * Adds custom style sheet for libX
+ */
+const addLibXStyleSheet = () => {
+  let styleElement = document.getElementById(
+    `#${config.stylesheetSelectorClass}`
+  );
+  if (!styleElement) {
+    styleElement = document.createElement('style');
+    styleElement.id = config.stylesheetSelectorClass;
+    styleElement.innerHTML = customStyles;
+    document.head.appendChild(styleElement);
+  } else {
+    styleElement.innerHTML = customStyles;
+  }
+};
+
+/**
+ * Main const
+ */
 (async () => {
   while (!Spicetify?.showNotification) {
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -365,40 +429,19 @@ const addGlobalNavStyles = () => {
     const maxAttempts = 3;
 
     const checkGlobalNav = async () => {
+      isWindows = detectOS('win');
+      isMac = detectOS('mac');
+
       isGlobalNavAvailable = checkForGlobalNav();
       attempts++;
 
       if (isGlobalNavAvailable) {
-        // GlobalNav found, proceed with script execution
-        const styleSheetId = 'libraryX-styles';
+        addLibXStyleSheet(); // add stylesheet
 
-        let styleElement = document.getElementById(`#${styleSheetId}`);
-        if (!styleElement) {
-          styleElement = document.createElement('style');
-          styleElement.id = styleSheetId;
-          styleElement.innerHTML = customStyles;
-          document.head.appendChild(styleElement);
-        } else {
-          styleElement.innerHTML = customStyles;
-        }
-
-        // Initial toggle
         addGlobalNavStyles();
-        setTimeout(addGlobalNavStyles(), 2000);
+        setTimeout(addGlobalNavStyles, 1000); // just to make sure every thing works
 
-        // Wait for 200ms then start observing changes
-        setTimeout(() => {
-          const observer = new MutationObserver(addGlobalNavStyles);
-          const globalNavElement = document.querySelector(GLOBAL_NAV_SELECTOR);
-          addLibXClasses();
-
-          if (globalNavElement) {
-            observer.observe(globalNavElement, {
-              childList: true,
-              subtree: true,
-            });
-          }
-        }, 200);
+        attachGlobalNavObserver();
       } else if (attempts < maxAttempts) {
         // GlobalNav not found, wait and try again
         console.log('GlobalNav not found, retrying...');
@@ -419,3 +462,21 @@ const addGlobalNavStyles = () => {
     Spicetify.showNotification(msg, true);
   }
 })();
+
+function detectOS(os_name) {
+  if (Spicetify.Platform?.operatingSystem)
+    return Spicetify.Platform?.operatingSystem
+      .toLowerCase()
+      .includes(os_name.toLowerCase());
+
+  if (Spicetify.Platform?.PlatformData?.os_name)
+    return Spicetify.Platform.PlatformData.os_name
+      .toLowerCase()
+      .includes(os_name.toLowerCase());
+
+  return false;
+}
+
+function getGlobalNavElement() {
+  return document.querySelector(config.globalNavSelector);
+}
