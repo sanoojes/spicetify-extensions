@@ -47,6 +47,17 @@ const customStyles = `
   padding: 0.5rem !important;
 }
 
+.Root__globalNav.global-libraryX {
+  margin: 0 !important;
+}
+
+.Root__globalNav .main-globalNav-historyButtonsContainer,
+.Root__globalNav .main-globalNav-searchSection,
+.Root__globalNav .main-topBar-topbarContentRight {
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+
 .Root__globalNav {
   --library-bg-color: var(--background-base, var(--spice-main));
   height: unset;
@@ -260,13 +271,13 @@ const customStyles = `
 
 .global-libraryX .main-globalNav-searchInputSection {
   min-width: 25vw;
-  /* max-width: 25vw; */
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
-}`;
+}
+`;
 
 const setElementPositions = () => {
   const historyButtonsElement = document.querySelector(
