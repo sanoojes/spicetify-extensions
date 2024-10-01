@@ -159,7 +159,6 @@ const customStyles = `
   top: 0.5rem;
   max-width: 25vw;
   margin-inline: unset;
-  z-index: 1;
 }
 
 .Root__globalNav .main-globalNav-historyButtons {
