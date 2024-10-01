@@ -70,6 +70,9 @@ const customStyles = `
   padding: 8px;
 }
 
+.zugTpa7GhjPIQmTCgBzw:has(:is(.main-topBar-searchBar:focus, .main-topBar-searchBar:focus-within, input:focus, input:focus-within)) {
+  z-index: 1;
+}
 
 .Root__globalNav .main-globalNav-link-icon {
   background-color: unset;

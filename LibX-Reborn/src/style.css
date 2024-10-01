@@ -1,0 +1,263 @@
+.Root__top-container,
+:root .global-nav .Root__top-container,
+.spotify__container--is-desktop .global-nav .Root__top-container {
+  padding-top: 64px !important;
+  grid-template-areas:
+    "global-nav main-view right-sidebar"
+    "left-sidebar main-view right-sidebar"
+    "now-playing-bar now-playing-bar now-playing-bar" !important;
+
+  grid-template-rows: auto 1fr auto !important;
+}
+
+#Desktop_LeftSidebar_Id,
+.Root__globalNav {
+  transition: width 0.3s ease;
+}
+
+.zugTpa7GhjPIQmTCgBzw:has(:is(.main-topBar-searchBar:focus, .main-topBar-searchBar:focus-within, input:focus, input:focus-within)) {
+  z-index: 1;
+}
+.Root__globalNav,
+.spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
+.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
+.Root__globalNav {
+  padding-inline-end: 0 !important;
+  padding-inline-start: 0 !important;
+  padding-block: 0 !important;
+  padding-inline: 0 !important;
+  padding-block-end: 0 !important;
+  padding-block-start: 0 !important;
+  padding: 0.5rem !important;
+}
+
+.Root__globalNav.global-libraryX {
+  margin: 0 !important;
+}
+
+.Root__globalNav .main-globalNav-historyButtonsContainer,
+.Root__globalNav .main-globalNav-searchSection,
+.Root__globalNav .main-topBar-topbarContentRight {
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+
+.Root__globalNav {
+  --library-bg-color: var(--background-base, var(--spice-main));
+  height: unset;
+  max-width: calc(var(--left-sidebar-width) *1px);
+  width: calc(var(--left-sidebar-width) *1px);
+  background-color: var(--library-bg-color);
+  border-radius: 8px;
+  padding-inline: unset !important;
+  align-items: unset;
+  padding: 8px;
+}
+
+
+.Root__globalNav .main-globalNav-link-icon {
+  background-color: unset;
+  transform: unset;
+  justify-content: unset;
+  height: 3.25rem;
+  max-height: 3.25rem;
+  padding: 1rem;
+  border: none !important;
+}
+
+.Root__nav-bar .LayoutResizer__resize-bar {
+  height: 82vh;
+  bottom: 0;
+}
+
+.main-actionButtons {
+  display: inline-flex !important;
+  animation: unset !important;
+}
+
+.main-globalNav-historyButtons>* {
+  display: unset;
+}
+
+
+.main-globalNav-historyButtons {
+  order: 1;
+  display: unset;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+.main-globalNav-historyButtonsContainer {
+  display: grid;
+  order: 0;
+}
+
+.main-globalNav-searchSection {
+  order: -1;
+}
+
+.Root__globalNav .Dp3xccI7c2f_JSJ8OHYu {
+  margin-inline-start: unset;
+}
+
+.Root__globalNav,
+.main-globalNav-searchContainer,
+.aKOZdeebnsaeeMTiugmO {
+  flex-direction: column !important;
+}
+
+.SFAoASy0S_LZJmYZ3Fh9 {
+  background: unset;
+  background-color: unset !important;
+  border-bottom: unset;
+}
+
+.main-topBar-topbarContentRight {
+  justify-content: unset;
+}
+
+.main-globalNav-iconText:not(.main-globalNav-link-icon) {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-inline-start: 0.5rem;
+}
+
+.main-globalNav-historyButtons,
+.Root__globalNav .main-topBar-topbarContentRight {
+  position: fixed !important;
+  display: flex !important;
+  top: 0;
+  padding: 0.5rem;
+  height: max-content;
+  width: max-content;
+}
+
+._b3hhmbWtOY8_1M1mM1H {
+  margin-inline: 0;
+}
+
+.zugTpa7GhjPIQmTCgBzw,
+.main-globalNav-searchInputSection {
+  position: fixed;
+  top: 0.5rem;
+  max-width: 25vw;
+  margin-inline: unset;
+}
+
+.Root__globalNav .main-globalNav-historyButtons {
+  top: 0 !important;
+  left: var(--history-button-left, var(--panel-gap, 0.5rem)) !important;
+}
+
+.Root__globalNav .main-globalNav-searchContainer>span:nth-child(2),
+.Root__globalNav .main-globalNav-searchContainer>span[role='presentation'],
+.Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw {
+  top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
+  left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
+}
+
+.Root__globalNav .main-topBar-topbarContentRight {
+  right: 0.5rem;
+}
+
+.spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav .main-topBar-topbarContentRight {
+  right: 10vw;
+}
+
+.main-globalNav-navLinkActive {
+  --library-bg-color: var(--spice-card);
+  background-color: var(--library-bg-color) !important;
+  border-radius: 0.5rem !important;
+}
+
+#main:has(.oZT8iKL42zhLAm_zE5F5) .main-globalNav-textWrapper {
+  display: none;
+}
+
+.Root__globalNav {
+  display: flex;
+  overflow: hidden;
+  --card-gap: 0.25rem;
+}
+
+.custom-navlinks-scrollable_container {
+  -webkit-app-region: no-drag;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.Root__globalNav .main-globalNav-searchContainer,
+.Root__globalNav .search-searchCategory-categoryGrid>div[role="presentation"] {
+  display: flex;
+  flex-direction: column !important;
+  width: 100% !important;
+  row-gap: var(--card-gap);
+}
+
+.Root__globalNav .search-searchCategory-categoryGrid>div[role="presentation"]>button {
+  /* background-color: var(--spice-card); */
+  border-radius: 0.5rem;
+}
+
+
+.custom-navlinks-scrollable_container {
+  margin-top: var(--card-gap);
+}
+
+.custom-navlinks-scrollable_container div[role="presentation"]>* {
+  margin: 0 !important;
+}
+
+.Root__globalNav .main-globalNav-searchInputSection {
+  display: flex;
+  align-items: center;
+  z-index: var(--above-main-and-now-playing-view-grid-area, 6);
+}
+
+.forceExpandSearchInput .main-globalNav-searchInputSection .main-globalNav-textWrapper {
+  display: none;
+}
+
+.main-globalNav-textWrapper {
+  margin-left: 1rem;
+}
+
+.main-globalNav-searchInputSection .main-globalNav-textWrapper {
+  position: absolute;
+  margin-left: 3.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.main-globalNav-searchText {
+  font-size: 1rem;
+  font-weight: 700;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  text-wrap: nowrap;
+}
+
+.forceExpandSearchInput .main-globalNav-searchInputContainer input {
+  border: 1px solid var(--background-elevated-base);
+}
+
+.main-globalNav-searchInputContainer .SFAoASy0S_LZJmYZ3Fh9:hover,
+.main-globalNav-searchInputContainer input:hover {
+  --library-bg-color: var(--spice-card);
+  background-color: var(--library-bg-color) !important;
+}
+
+.searchInputCollapsed .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
+  visibility: hidden;
+}
+
+.global-libraryX .main-globalNav-searchInputSection {
+  min-width: 25vw;
+}
+
+.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
+.searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
+  visibility: visible !important;
+}
