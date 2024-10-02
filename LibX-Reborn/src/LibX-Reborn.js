@@ -290,31 +290,21 @@ const setElementPositions = () => {
       .main-globalNav-searchInputSection`
     );
 
-    if (searchElement) {
-      if (isWindows) {
-        setElementPositionProperties('history-button', {
-          left: 64 + config.defaultGap,
-        });
-        setElementPositionProperties('search-container', {
-          left: historyButtonsWidth + config.defaultGap,
-          top: config.defaultGap,
-        });
-      } else if (isMac) {
-        setElementPositionProperties('history-button', {
-          left: 80 + config.defaultGap,
-        });
-        setElementPositionProperties('search-container', {
-          left: historyButtonsWidth + config.defaultGap,
-          top: config.defaultGap,
-        });
-      } else {
-        setElementPositionProperties('history-button', {
-          left: config.defaultGap,
-        });
-        setElementPositionProperties('search-container', {
-          left: historyButtonsWidth + config.defaultGap,
-        });
-      }
+    const historyButtonLeftOffset =
+      (isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
+    if (historyButtonsElement) {
+      setElementPositionProperties('history-button', {
+        left: historyButtonLeftOffset,
+      });
+    }
+
+    if (searchElement && historyButtonsWidth) {
+      const searchLeftOffset = historyButtonsWidth + config.defaultGap;
+
+      setElementPositionProperties('search-container', {
+        left: searchLeftOffset,
+        top: config.defaultGap,
+      });
     }
   }
 };
