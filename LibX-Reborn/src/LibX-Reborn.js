@@ -47,17 +47,6 @@ const customStyles = `
   padding: 0.5rem !important;
 }
 
-.Root__globalNav.global-libraryX {
-  margin: 0 !important;
-}
-
-.Root__globalNav .main-globalNav-historyButtonsContainer,
-.Root__globalNav .main-globalNav-searchSection,
-.Root__globalNav .main-topBar-topbarContentRight {
-  -webkit-transform: none !important;
-  transform: none !important;
-}
-
 .Root__globalNav {
   --library-bg-color: var(--background-base, var(--spice-main));
   height: unset;
@@ -70,9 +59,6 @@ const customStyles = `
   padding: 8px;
 }
 
-.zugTpa7GhjPIQmTCgBzw:has(:is(.main-topBar-searchBar:focus, .main-topBar-searchBar:focus-within, input:focus, input:focus-within)) {
-  z-index: 1;
-}
 
 .Root__globalNav .main-globalNav-link-icon {
   background-color: unset;
@@ -171,7 +157,9 @@ const customStyles = `
 
 .Root__globalNav .main-globalNav-searchContainer>span:nth-child(2),
 .Root__globalNav .main-globalNav-searchContainer>span[role='presentation'],
-.Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw {
+.Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw,
+.Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
+.Root__globalNav .main-globalNav-searchContainer > form {
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
 }
@@ -228,6 +216,10 @@ const customStyles = `
   margin: 0 !important;
 }
 
+.zugTpa7GhjPIQmTCgBzw:has(input:focus){
+  z-index: 5;
+}
+
 .Root__globalNav .main-globalNav-searchInputSection {
   display: flex;
   align-items: center;
@@ -274,17 +266,18 @@ const customStyles = `
 
 .global-libraryX .main-globalNav-searchInputSection {
   min-width: 25vw;
+  /* max-width: 25vw; */
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
-}
-`;
+}`;
 
 const setElementPositions = () => {
   const historyButtonsElement = document.querySelector(
-    '.Root__globalNav .main-globalNav-historyButtonsContainer>.main-globalNav-historyButtons'
+    `.Root__globalNav .main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons,
+    .Root__globalNav .main-globalNav-historyButtons`
   );
   if (historyButtonsElement) {
     const historyButtonsWidth =
@@ -293,7 +286,8 @@ const setElementPositions = () => {
 
     const searchElement = document.querySelector(
       `.Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>span[role='presentation'],
-      .Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw`
+      .Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw,
+      .main-globalNav-searchInputSection`
     );
 
     if (searchElement) {
