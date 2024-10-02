@@ -34,6 +34,18 @@ const customStyles = `
   transition: width 0.3s ease;
 }
 
+.Root__globalNav.global-libraryX {
+  margin: 0 !important;
+}
+
+.Root__globalNav .main-globalNav-historyButtonsContainer,
+.Root__globalNav .main-globalNav-searchSection,
+.Root__globalNav .main-topBar-topbarContentRight {
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+
+
 .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
