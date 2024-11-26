@@ -1,17 +1,17 @@
 const config = {
   defaultGap: 8,
-  globalNavSelector: '.Root__globalNav',
-  libXGlobalNavSelectorClass: 'global-libraryX',
-  stylesheetSelectorClass: 'libraryX-styles',
+  globalNavSelector: ".Root__globalNav",
+  libXGlobalNavSelectorClass: "global-libraryX",
+  stylesheetSelectorClass: "libraryX-styles",
 };
 
 const checkForGlobalNav = () =>
-  document.querySelector('.globalNav') ||
-  document.querySelector('.Root__globalNav') ||
+  document.querySelector(".globalNav") ||
+  document.querySelector(".Root__globalNav") ||
   false;
 
-let isWindows = detectOS('win');
-let isMac = detectOS('mac');
+let isWindows = detectOS("win");
+let isMac = detectOS("mac");
 
 let isGlobalNavAvailable = checkForGlobalNav();
 let globalNavElement = getGlobalNavElement();
@@ -167,13 +167,18 @@ const customStyles = `
   left: var(--history-button-left, var(--panel-gap, 0.5rem)) !important;
 }
 
+
+.Root__globalNav .fmZ0hU6ImbDQi5qGWLvF,
 .Root__globalNav .main-globalNav-searchContainer>span:nth-child(2),
 .Root__globalNav .main-globalNav-searchContainer>span[role='presentation'],
 .Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw,
 .Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
 .Root__globalNav .main-globalNav-searchContainer > form {
+  position: fixed;
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
+  width: 28vw;
+  max-width: 28vw;
 }
 
 .Root__globalNav .main-topBar-topbarContentRight {
@@ -305,7 +310,7 @@ const setElementPositions = () => {
     const historyButtonLeftOffset =
       (isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
     if (historyButtonsElement) {
-      setElementPositionProperties('history-button', {
+      setElementPositionProperties("history-button", {
         left: historyButtonLeftOffset,
       });
     }
@@ -313,7 +318,7 @@ const setElementPositions = () => {
     if (searchElement && historyButtonsWidth) {
       const searchLeftOffset = historyButtonsWidth + config.defaultGap;
 
-      setElementPositionProperties('search-container', {
+      setElementPositionProperties("search-container", {
         left: searchLeftOffset,
         top: config.defaultGap,
       });
@@ -336,13 +341,13 @@ const addButtonText = () => {
     )
       return;
 
-    const newTextElement = document.createElement('div');
+    const newTextElement = document.createElement("div");
     newTextElement.className =
-      'main-globalNav-searchText encore-text encore-text-body-medium-bold';
+      "main-globalNav-searchText encore-text encore-text-body-medium-bold";
     newTextElement.textContent =
-      element.getAttribute('aria-label') || element.getAttribute('alt') || '';
-    const newTextWrapperElement = document.createElement('span');
-    newTextWrapperElement.className = 'main-globalNav-textWrapper';
+      element.getAttribute("aria-label") || element.getAttribute("alt") || "";
+    const newTextWrapperElement = document.createElement("span");
+    newTextWrapperElement.className = "main-globalNav-textWrapper";
     newTextWrapperElement.appendChild(newTextElement);
 
     element.appendChild(newTextWrapperElement);
@@ -359,7 +364,7 @@ const attachGlobalNavObserver = () => {
   const globalNavObserver = new MutationObserver(addGlobalNavStyles);
 
   const globalNavButtonWrapperElement = document.querySelector(
-    '.Root__globalNav .main-globalNav-historyButtonsContainer'
+    ".Root__globalNav .main-globalNav-historyButtonsContainer"
   );
 
   if (globalNavButtonWrapperElement) {
@@ -376,7 +381,7 @@ const setElementCustomProperty = (
   element,
   propertyName,
   value,
-  unit = 'px'
+  unit = "px"
 ) => {
   if (!element) return;
 
@@ -417,7 +422,7 @@ const addLibXStyleSheet = () => {
     `#${config.stylesheetSelectorClass}`
   );
   if (!styleElement) {
-    styleElement = document.createElement('style');
+    styleElement = document.createElement("style");
     styleElement.id = config.stylesheetSelectorClass;
     styleElement.innerHTML = customStyles;
     document.head.appendChild(styleElement);
@@ -435,14 +440,14 @@ const addLibXStyleSheet = () => {
   }
 
   try {
-    console.log('[LibX-Reborn] Running GlobalNav to LibraryX script...');
+    console.log("[LibX-Reborn] Running GlobalNav to LibraryX script...");
 
     let attempts = 0;
     const maxAttempts = 3;
 
     const checkGlobalNav = async () => {
-      isWindows = detectOS('win');
-      isMac = detectOS('mac');
+      isWindows = detectOS("win");
+      isMac = detectOS("mac");
 
       isGlobalNavAvailable = checkForGlobalNav();
       attempts++;
@@ -456,12 +461,12 @@ const addLibXStyleSheet = () => {
         attachGlobalNavObserver();
       } else if (attempts < maxAttempts) {
         // GlobalNav not found, wait and try again
-        console.log('GlobalNav not found, retrying...');
+        console.log("GlobalNav not found, retrying...");
         await new Promise((resolve) => setTimeout(resolve, 1000));
         checkGlobalNav();
       } else {
         const msg =
-          '[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.';
+          "[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.";
         console.error(msg);
         Spicetify.showNotification(msg, true);
       }
