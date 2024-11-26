@@ -6,5 +6,13 @@
     "main": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/LibX-Reborn/src/LibX-Reborn.js",
     "readme": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/LibX-Reborn/README.md",
     "tags": ["interface", "global-nav", "nav"]
+  },
+  {
+    "name": "Daily Mix URL Fixer",
+    "description": "A browser extension to revert Daily Mix image URLs to their previous format, restoring the classic look after recent updates.",
+    "preview": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/mix-url-fixer/assets/sc.png",
+    "main": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/mix-url-fixer/mix-url-fixer.js",
+    "readme": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/README.md",
+    "tags": ["Daily Mix", "URL Fix", "Image Revert"]
   }
 ]
