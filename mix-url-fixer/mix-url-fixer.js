@@ -3,7 +3,7 @@
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  console.log("am alive");
+  console.log("[mix-url-fixer] am alive");
 
   function debounce(func, delay) {
     let timeout;
@@ -17,28 +17,46 @@
 
   async function updateImageLinks() {
     const images = document.querySelectorAll(
-      ".main-gridContainer-gridContainer img, .main-entityHeader-image img"
+      ".main-gridContainer-gridContainer img, .main-entityHeader-image img, .main-yourLibraryX-listItem .x-entityImage-imageContainer img"
     );
     const pattern = /\/daily\/(\d+)\/([a-f0-9]{40})/;
 
-    for (const img of images) {
+    const updatePromises = Array.from(images).map(async (img) => {
       const src = img.src;
-
-      console.debug("Checking image src:", src);
-
       const match = src.match(pattern);
 
       if (match) {
-        const number = match[1];
-        const uid = match[2];
+        img.style.transition = "filter 0.3s ease, opacity 0.3s ease";
+        img.style.filter = "blur(8px)";
+        img.style.opacity = 0.5;
 
-        const newSrc = `https://dailymix-images.scdn.co/v2/img/${uid}/${number}/en/default`;
+        return new Promise((resolve) => {
+          const number = match[1];
+          const uid = match[2];
+          const newSrc = `https://dailymix-images.scdn.co/v2/img/${uid}/${number}/en/default`;
 
-        img.src = newSrc;
-        img.srcset = newSrc;
-        console.debug(`Updated image src to: ${newSrc}`);
+          const newImg = new Image();
+          newImg.onload = () => {
+            img.src = newSrc;
+            img.srcset = newSrc;
+            img.style.filter = "none";
+            img.style.opacity = 1;
+            resolve();
+          };
+          newImg.onerror = (error) => {
+            console.error("[mix-url-fixer] Failed to load new image:", error);
+            img.style.filter = "none";
+            img.style.opacity = 1;
+            resolve();
+          };
+          newImg.src = newSrc;
+        });
       }
-    }
+      return Promise.resolve();
+    });
+
+    await Promise.all(updatePromises);
+    console.log("[mix-url-fixer] All image updates complete");
   }
 
   const debouncedUpdate = debounce(async () => {
@@ -54,7 +72,7 @@
 
     if (observer) {
       observer.disconnect();
-      console.log("Disconnected the previous observer.");
+      console.log("[mix-url-fixer] Disconnected the previous observer.");
     }
 
     observer = new MutationObserver((mutationsList) => {
@@ -80,6 +98,6 @@
   }
 
   setTimeout(() => {
-    observeImages(".Root__main-view");
+    observeImages(".Root__main-view, .Root__nav-bar");
   }, 1000);
 })();
