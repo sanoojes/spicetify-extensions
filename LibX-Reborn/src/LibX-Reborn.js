@@ -173,6 +173,7 @@ const customStyles = `.Root__top-container,
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
   width: 28vw;
   max-width: 28vw;
+  height: fit-content;
 }
 
 .Root__globalNav .main-topBar-topbarContentRight {
