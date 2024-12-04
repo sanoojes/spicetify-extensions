@@ -16,8 +16,7 @@ let isMac = detectOS("mac");
 let isGlobalNavAvailable = checkForGlobalNav();
 let globalNavElement = getGlobalNavElement();
 
-const customStyles = `
-.Root__top-container,
+const customStyles = `.Root__top-container,
 :root .global-nav .Root__top-container,
 .spotify__container--is-desktop .global-nav .Root__top-container {
   padding-top: 64px !important;
@@ -34,9 +33,7 @@ const customStyles = `
   transition: width 0.3s ease;
 }
 
-.Root__globalNav.global-libraryX {
-  margin: 0 !important;
-}
+
 
 .Root__globalNav .main-globalNav-historyButtonsContainer,
 .Root__globalNav .main-globalNav-searchSection,
@@ -45,13 +42,9 @@ const customStyles = `
   transform: none !important;
 }
 
-
-.Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
 .Root__globalNav {
-  padding-inline-end: 0 !important;
-  padding-inline-start: 0 !important;
   padding-block: 0 !important;
   padding-inline: 0 !important;
   padding-block-end: 0 !important;
@@ -69,6 +62,8 @@ const customStyles = `
   padding-inline: unset !important;
   align-items: unset;
   padding: 8px;
+  z-index: var(--above-everything-except-now-playing-bar-z-index, 5);
+  margin: 0 !important;
 }
 
 
@@ -95,7 +90,6 @@ const customStyles = `
 .main-globalNav-historyButtons>* {
   display: unset;
 }
-
 
 .main-globalNav-historyButtons {
   order: 1;
@@ -173,7 +167,7 @@ const customStyles = `
 .Root__globalNav .main-globalNav-searchContainer>span[role='presentation'],
 .Root__globalNav .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw,
 .Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
-.Root__globalNav .main-globalNav-searchContainer > form {
+.Root__globalNav .main-globalNav-searchContainer>form {
   position: fixed;
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
@@ -233,7 +227,7 @@ const customStyles = `
   margin: 0 !important;
 }
 
-.zugTpa7GhjPIQmTCgBzw:has(input:focus){
+.zugTpa7GhjPIQmTCgBzw:has(input:focus) {
   z-index: 5;
 }
 
@@ -289,6 +283,10 @@ const customStyles = `
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
 .searchInputCollapsed.forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
   visibility: visible !important;
+}
+
+.custom-navlinks-scrollable_container {
+  margin-top: 0;
 }`;
 
 const setElementPositions = () => {
@@ -298,14 +296,7 @@ const setElementPositions = () => {
   );
   if (historyButtonsElement) {
     const historyButtonsWidth =
-      historyButtonsElement.getBoundingClientRect().x +
-        historyButtonsElement.getBoundingClientRect().width || 80;
-
-    const searchElement = document.querySelector(
-      `.Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>span[role='presentation'],
-      .Root__globalNav .main-globalNav-searchSection > .main-globalNav-searchContainer>.zugTpa7GhjPIQmTCgBzw,
-      .main-globalNav-searchInputSection`
-    );
+      historyButtonsElement.getBoundingClientRect().width || 80;
 
     const historyButtonLeftOffset =
       (isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
@@ -315,8 +306,9 @@ const setElementPositions = () => {
       });
     }
 
-    if (searchElement && historyButtonsWidth) {
-      const searchLeftOffset = historyButtonsWidth + config.defaultGap;
+    if (historyButtonsWidth) {
+      const searchLeftOffset =
+        historyButtonsWidth + (historyButtonLeftOffset || 8);
 
       setElementPositionProperties("search-container", {
         left: searchLeftOffset,
@@ -377,17 +369,6 @@ const attachGlobalNavObserver = () => {
   }
 };
 
-const setElementCustomProperty = (
-  element,
-  propertyName,
-  value,
-  unit = "px"
-) => {
-  if (!element) return;
-
-  element.style.setProperty(`--${propertyName}`, `${value}${unit}`);
-};
-
 const setElementPositionProperties = (
   propertyName,
   position = { left: 0, top: config.defaultGap, right: 0, bottom: 0 }
@@ -395,7 +376,10 @@ const setElementPositionProperties = (
   if (!globalNavElement) return;
 
   for (const [key, value] of Object.entries(position)) {
-    setElementCustomProperty(globalNavElement, `${propertyName}-${key}`, value);
+    globalNavElement.style.setProperty(
+      `--${propertyName}-${key}`,
+      `${value}px`
+    );
   }
 };
 
