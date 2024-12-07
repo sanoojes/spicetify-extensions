@@ -17,7 +17,7 @@
 
   async function updateImageLinks() {
     const images = document.querySelectorAll(
-      ".main-gridContainer-gridContainer img, .main-entityHeader-image img, .main-yourLibraryX-listItem .x-entityImage-imageContainer img, .view-homeShortcutsGrid-imageContainer img"
+      ".main-gridContainer-gridContainer img, .main-entityHeader-image img, .main-yourLibraryX-listItem .x-entityImage-imageContainer img, .view-homeShortcutsGrid-imageContainer img,.main-home-content section img"
     );
     const pattern = /\/daily\/(\d+)\/([a-f0-9]{40})/;
 
