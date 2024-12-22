@@ -66,7 +66,7 @@ const customStyles = `.Root__top-container,
   margin: 0 !important;
 }
 
-
+.Root__globalNav .main-globalNav-navLink,
 .Root__globalNav .main-globalNav-link-icon {
   background-color: unset;
   transform: unset;
@@ -102,6 +102,7 @@ const customStyles = `.Root__top-container,
 .main-globalNav-historyButtonsContainer {
   display: grid;
   order: 0;
+  z-index: -1;
 }
 
 .main-globalNav-searchSection {
@@ -185,8 +186,7 @@ const customStyles = `.Root__top-container,
 }
 
 .main-globalNav-navLinkActive {
-  --library-bg-color: var(--spice-card);
-  background-color: var(--library-bg-color) !important;
+  background-color: rgba(var(--spice-rgb-selected-row),0.1) !important;
   border-radius: 0.5rem !important;
 }
 
@@ -213,7 +213,7 @@ const customStyles = `.Root__top-container,
   width: 100% !important;
   row-gap: var(--card-gap);
 }
-
+.Root__globalNav .main-globalNav-navLink,
 .Root__globalNav .search-searchCategory-categoryGrid>div[role="presentation"]>button {
   /* background-color: var(--spice-card); */
   border-radius: 0.5rem;
@@ -266,10 +266,10 @@ const customStyles = `.Root__top-container,
   border: 1px solid var(--background-elevated-base);
 }
 
+.Root__globalNav .main-globalNav-navLink:hover,
 .main-globalNav-searchInputContainer .SFAoASy0S_LZJmYZ3Fh9:hover,
 .main-globalNav-searchInputContainer input:hover {
-  --library-bg-color: var(--spice-card);
-  background-color: var(--library-bg-color) !important;
+  background-color: rgba(var(--spice-rgb-selected-row),0.1) !important;
 }
 
 .searchInputCollapsed .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h {
@@ -322,7 +322,7 @@ const setElementPositions = () => {
 const addButtonText = () => {
   const buttonElements = document.querySelectorAll(
     `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
-    .Root__globalNav .main-globalNav-searchContainer > .main-globalNav-link-icon`
+    .Root__globalNav .main-globalNav-link-icon, .Root__globalNav .main-globalNav-navLink`
   );
 
   for (const element of buttonElements) {
