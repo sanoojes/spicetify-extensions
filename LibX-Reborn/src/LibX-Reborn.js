@@ -55,8 +55,7 @@ const customStyles = `.Root__top-container,
 .Root__globalNav {
   --library-bg-color: var(--background-base, var(--spice-main));
   height: unset;
-  max-width: calc(var(--left-sidebar-width) *1px);
-  width: calc(var(--left-sidebar-width) *1px);
+  width: 100%;
   background-color: var(--library-bg-color);
   border-radius: 8px;
   padding-inline: unset !important;
