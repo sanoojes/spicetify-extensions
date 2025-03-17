@@ -1,14 +1,14 @@
 const config = {
-  defaultGap: 8,
-  globalNavSelector: ".Root__globalNav",
-  libXGlobalNavSelectorClass: "global-libraryX",
-  stylesheetSelectorClass: "libraryX-styles",
+	defaultGap: 8,
+	globalNavSelector: ".Root__globalNav",
+	libXGlobalNavSelectorClass: "global-libraryX",
+	stylesheetSelectorClass: "libraryX-styles",
 };
 
 const checkForGlobalNav = () =>
-  document.querySelector(".globalNav") ||
-  document.querySelector(".Root__globalNav") ||
-  false;
+	document.querySelector(".globalNav") ||
+	document.querySelector(".Root__globalNav") ||
+	false;
 
 let isWindows = detectOS("win");
 let isMac = detectOS("mac");
@@ -49,9 +49,11 @@ const customStyles = `.Root__top-container,
   padding-inline: 0 !important;
   padding-block-end: 0 !important;
   padding-block-start: 0 !important;
-  padding: 0.5rem !important;
+  padding: 0.25rem !important;
 }
-
+.main-globalNav-link-icon .Wrapper-medium-only {
+    margin-left: 0.25rem;
+}
 .Root__globalNav {
   --library-bg-color: var(--background-base, var(--spice-main));
   height: unset;
@@ -287,197 +289,213 @@ const customStyles = `.Root__top-container,
 
 .custom-navlinks-scrollable_container {
   margin-top: 0;
+}
+.CCIGxtpAreSdwWRo14FE {
+  width: 0 !important;
+  height: 0 !important;
+}
+.TTB3lAVAhCK9Apl8quWw{
+  -webkit-margin-start: 0px;
+  -webkit-padding-start: 0px;
+  padding-inline-start: 0px;
+  margin-block-start: 0px;
+}
+.B9lb86gGqGGFcSZZ95bA{
+  display: none;
+}
+.Root__globalNav.global-libraryX{
+  width: 100%;
 }`;
 
 const setElementPositions = () => {
-  const historyButtonsElement = document.querySelector(
-    `.Root__globalNav .main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons,
-    .Root__globalNav .main-globalNav-historyButtons`
-  );
-  if (historyButtonsElement) {
-    const historyButtonsWidth =
-      historyButtonsElement.getBoundingClientRect().width || 80;
+	const historyButtonsElement = document.querySelector(
+		`.Root__globalNav .main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons,
+    .Root__globalNav .main-globalNav-historyButtons`,
+	);
+	if (historyButtonsElement) {
+		const historyButtonsWidth =
+			historyButtonsElement.getBoundingClientRect().width || 80;
 
-    const historyButtonLeftOffset =
-      (isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
-    if (historyButtonsElement) {
-      setElementPositionProperties("history-button", {
-        left: historyButtonLeftOffset,
-      });
-    }
+		const historyButtonLeftOffset =
+			(isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
+		if (historyButtonsElement) {
+			setElementPositionProperties("history-button", {
+				left: historyButtonLeftOffset,
+			});
+		}
 
-    if (historyButtonsWidth) {
-      const searchLeftOffset =
-        historyButtonsWidth + (historyButtonLeftOffset || 8);
+		if (historyButtonsWidth) {
+			const searchLeftOffset =
+				historyButtonsWidth + (historyButtonLeftOffset || 8);
 
-      setElementPositionProperties("search-container", {
-        left: searchLeftOffset,
-        top: config.defaultGap,
-      });
-    }
-  }
+			setElementPositionProperties("search-container", {
+				left: searchLeftOffset,
+				top: config.defaultGap,
+			});
+		}
+	}
 };
 
 const addButtonText = () => {
-  const buttonElements = document.querySelectorAll(
-    `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
-    .Root__globalNav .main-globalNav-link-icon, .Root__globalNav .main-globalNav-navLink`
-  );
+	const buttonElements = document.querySelectorAll(
+		`.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
+    .Root__globalNav .main-globalNav-link-icon, .Root__globalNav .main-globalNav-navLink`,
+	);
 
-  for (const element of buttonElements) {
-    if (
-      element.querySelector(
-        `.main-globalNav-textWrapper,
-        .main-globalNav-searchText.encore-text.encore-text-body-medium-bold`
-      )
-    )
-      return;
+	for (const element of buttonElements) {
+		if (
+			element.querySelector(
+				`.main-globalNav-textWrapper,
+        .main-globalNav-searchText.encore-text.encore-text-body-medium-bold`,
+			)
+		)
+			return;
 
-    const newTextElement = document.createElement("div");
-    newTextElement.className =
-      "main-globalNav-searchText encore-text encore-text-body-medium-bold";
-    newTextElement.textContent =
-      element.getAttribute("aria-label") || element.getAttribute("alt") || "";
-    const newTextWrapperElement = document.createElement("span");
-    newTextWrapperElement.className = "main-globalNav-textWrapper";
-    newTextWrapperElement.appendChild(newTextElement);
+		const newTextElement = document.createElement("div");
+		newTextElement.className =
+			"main-globalNav-searchText encore-text encore-text-body-medium-bold";
+		newTextElement.textContent =
+			element.getAttribute("aria-label") || element.getAttribute("alt") || "";
+		const newTextWrapperElement = document.createElement("span");
+		newTextWrapperElement.className = "main-globalNav-textWrapper";
+		newTextWrapperElement.appendChild(newTextElement);
 
-    element.appendChild(newTextWrapperElement);
-  }
+		element.appendChild(newTextWrapperElement);
+	}
 };
 
 const addGlobalNavStyles = () => {
-  setElementPositions();
-  addButtonText();
-  addLibXClasses();
+	setElementPositions();
+	addButtonText();
+	addLibXClasses();
 };
 
 const attachGlobalNavObserver = () => {
-  const globalNavObserver = new MutationObserver(addGlobalNavStyles);
+	const globalNavObserver = new MutationObserver(addGlobalNavStyles);
 
-  const globalNavButtonWrapperElement = document.querySelector(
-    ".Root__globalNav .main-globalNav-historyButtonsContainer"
-  );
+	const globalNavButtonWrapperElement = document.querySelector(
+		".Root__globalNav .main-globalNav-historyButtonsContainer",
+	);
 
-  if (globalNavButtonWrapperElement) {
-    globalNavObserver.observe(globalNavButtonWrapperElement, {
-      childList: true,
-      subtree: true,
-    });
-  } else {
-    globalNavObserver.disconnect();
-  }
+	if (globalNavButtonWrapperElement) {
+		globalNavObserver.observe(globalNavButtonWrapperElement, {
+			childList: true,
+			subtree: true,
+		});
+	} else {
+		globalNavObserver.disconnect();
+	}
 };
 
 const setElementPositionProperties = (
-  propertyName,
-  position = { left: 0, top: config.defaultGap, right: 0, bottom: 0 }
+	propertyName,
+	position = { left: 0, top: config.defaultGap, right: 0, bottom: 0 },
 ) => {
-  if (!globalNavElement) return;
+	if (!globalNavElement) return;
 
-  for (const [key, value] of Object.entries(position)) {
-    globalNavElement.style.setProperty(
-      `--${propertyName}-${key}`,
-      `${value}px`
-    );
-  }
+	for (const [key, value] of Object.entries(position)) {
+		globalNavElement.style.setProperty(
+			`--${propertyName}-${key}`,
+			`${value}px`,
+		);
+	}
 };
 
 /**
  * Adds libX class name to GlobalNav
  */
 const addLibXClasses = () => {
-  try {
-    globalNavElement = getGlobalNavElement();
-    if (globalNavElement)
-      globalNavElement.classList.add(config.libXGlobalNavSelectorClass);
-  } catch (error) {
-    console.error(
-      `[LibX-Reborn] Error adding class to global nav element: ${error.message}`
-    );
-  }
+	try {
+		globalNavElement = getGlobalNavElement();
+		if (globalNavElement)
+			globalNavElement.classList.add(config.libXGlobalNavSelectorClass);
+	} catch (error) {
+		console.error(
+			`[LibX-Reborn] Error adding class to global nav element: ${error.message}`,
+		);
+	}
 };
 
 /**
  * Adds custom style sheet for libX
  */
 const addLibXStyleSheet = () => {
-  let styleElement = document.getElementById(
-    `#${config.stylesheetSelectorClass}`
-  );
-  if (!styleElement) {
-    styleElement = document.createElement("style");
-    styleElement.id = config.stylesheetSelectorClass;
-    styleElement.innerHTML = customStyles;
-    document.head.appendChild(styleElement);
-  } else {
-    styleElement.innerHTML = customStyles;
-  }
+	let styleElement = document.getElementById(
+		`#${config.stylesheetSelectorClass}`,
+	);
+	if (!styleElement) {
+		styleElement = document.createElement("style");
+		styleElement.id = config.stylesheetSelectorClass;
+		styleElement.innerHTML = customStyles;
+		document.head.appendChild(styleElement);
+	} else {
+		styleElement.innerHTML = customStyles;
+	}
 };
 
 /**
  * Main const
  */
 (async () => {
-  while (!Spicetify?.showNotification) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
+	while (!Spicetify?.showNotification) {
+		await new Promise((resolve) => setTimeout(resolve, 100));
+	}
 
-  try {
-    console.log("[LibX-Reborn] Running GlobalNav to LibraryX script...");
+	try {
+		console.log("[LibX-Reborn] Running GlobalNav to LibraryX script...");
 
-    let attempts = 0;
-    const maxAttempts = 3;
+		let attempts = 0;
+		const maxAttempts = 3;
 
-    const checkGlobalNav = async () => {
-      isWindows = detectOS("win");
-      isMac = detectOS("mac");
+		const checkGlobalNav = async () => {
+			isWindows = detectOS("win");
+			isMac = detectOS("mac");
 
-      isGlobalNavAvailable = checkForGlobalNav();
-      attempts++;
+			isGlobalNavAvailable = checkForGlobalNav();
+			attempts++;
 
-      if (isGlobalNavAvailable) {
-        addLibXStyleSheet(); // add stylesheet
+			if (isGlobalNavAvailable) {
+				addLibXStyleSheet(); // add stylesheet
 
-        addGlobalNavStyles();
-        setTimeout(addGlobalNavStyles, 1000); // just to make sure every thing works
+				addGlobalNavStyles();
+				setTimeout(addGlobalNavStyles, 1000); // just to make sure every thing works
 
-        attachGlobalNavObserver();
-      } else if (attempts < maxAttempts) {
-        // GlobalNav not found, wait and try again
-        console.log("GlobalNav not found, retrying...");
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        checkGlobalNav();
-      } else {
-        const msg =
-          "[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.";
-        console.error(msg);
-        Spicetify.showNotification(msg, true);
-      }
-    };
+				attachGlobalNavObserver();
+			} else if (attempts < maxAttempts) {
+				// GlobalNav not found, wait and try again
+				console.log("GlobalNav not found, retrying...");
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				checkGlobalNav();
+			} else {
+				const msg =
+					"[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.";
+				console.error(msg);
+				Spicetify.showNotification(msg, true);
+			}
+		};
 
-    await checkGlobalNav();
-  } catch (error) {
-    const msg = `[LibX-Reborn] Error running GlobalNav to LibraryX script:${error}`;
-    console.error(msg);
-    Spicetify.showNotification(msg, true);
-  }
+		await checkGlobalNav();
+	} catch (error) {
+		const msg = `[LibX-Reborn] Error running GlobalNav to LibraryX script:${error}`;
+		console.error(msg);
+		Spicetify.showNotification(msg, true);
+	}
 })();
 
 function detectOS(os_name) {
-  if (Spicetify.Platform?.operatingSystem)
-    return Spicetify.Platform?.operatingSystem
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
+	if (Spicetify.Platform?.operatingSystem)
+		return Spicetify.Platform?.operatingSystem
+			.toLowerCase()
+			.includes(os_name.toLowerCase());
 
-  if (Spicetify.Platform?.PlatformData?.os_name)
-    return Spicetify.Platform.PlatformData.os_name
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
+	if (Spicetify.Platform?.PlatformData?.os_name)
+		return Spicetify.Platform.PlatformData.os_name
+			.toLowerCase()
+			.includes(os_name.toLowerCase());
 
-  return false;
+	return false;
 }
 
 function getGlobalNavElement() {
-  return document.querySelector(config.globalNavSelector);
+	return document.querySelector(config.globalNavSelector);
 }
