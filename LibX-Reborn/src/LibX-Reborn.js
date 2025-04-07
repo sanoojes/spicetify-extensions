@@ -28,6 +28,10 @@ const customStyles = `.Root__top-container,
   grid-template-rows: auto 1fr auto !important;
 }
 
+.Kgjmt7IX5samBYUpbkBu {
+  display: none;
+}
+
 #Desktop_LeftSidebar_Id,
 .Root__globalNav {
   transition: width 0.3s ease;
