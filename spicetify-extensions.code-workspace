@@ -1,11 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../../AppData/Roaming/spicetify"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "C:/Users/Sachu/AppData/Roaming/spicetify"
+    }
+  ]
 }

@@ -1,14 +1,14 @@
 const config = {
-	defaultGap: 8,
-	globalNavSelector: ".Root__globalNav",
-	libXGlobalNavSelectorClass: "global-libraryX",
-	stylesheetSelectorClass: "libraryX-styles",
+  defaultGap: 8,
+  globalNavSelector: ".Root__globalNav",
+  libXGlobalNavSelectorClass: "global-libraryX",
+  stylesheetSelectorClass: "libraryX-styles",
 };
 
 const checkForGlobalNav = () =>
-	document.querySelector(".globalNav") ||
-	document.querySelector(".Root__globalNav") ||
-	false;
+  document.querySelector(".globalNav") ||
+  document.querySelector(".Root__globalNav") ||
+  false;
 
 let isWindows = detectOS("win");
 let isMac = detectOS("mac");
@@ -24,9 +24,13 @@ const customStyles = `.Root__top-container,
     "global-nav main-view right-sidebar"
     "left-sidebar main-view right-sidebar"
     "now-playing-bar now-playing-bar now-playing-bar" !important;
-
   grid-template-rows: auto 1fr auto !important;
 }
+.Root__globalNav,
+.Root__globalNav.VWGwIHKvvfu0ry5ZqbxU{
+  grid-area: global-nav !important;
+}
+
 
 #Desktop_LeftSidebar_Id,
 .Root__globalNav {
@@ -166,7 +170,8 @@ const customStyles = `.Root__top-container,
 .Root__globalNav .main-globalNav-searchContainer > span[role="presentation"],
 .Root__globalNav .main-globalNav-searchContainer > .zugTpa7GhjPIQmTCgBzw,
 .Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
-.Root__globalNav .main-globalNav-searchContainer > form {
+.Root__globalNav .main-globalNav-searchContainer > form 
+.Root__globalNav ._b3hhmbWtOY8_1M1mM1H > form{
   position: fixed;
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
