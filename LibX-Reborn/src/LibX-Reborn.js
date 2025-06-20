@@ -170,13 +170,13 @@ const customStyles = `.Root__top-container,
 .Root__globalNav .main-globalNav-searchContainer > span[role="presentation"],
 .Root__globalNav .main-globalNav-searchContainer > .zugTpa7GhjPIQmTCgBzw,
 .Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
-.Root__globalNav .main-globalNav-searchContainer > form 
-.Root__globalNav ._b3hhmbWtOY8_1M1mM1H > form{
+.Root__globalNav .main-globalNav-searchContainer > form,
+.Root__globalNav ._b3hhmbWtOY8_1M1mM1H > form {
   position: fixed;
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
-  width: 28vw;
-  max-width: 28vw;
+  width: 22rem;
+  max-width: 25vw;
   height: fit-content;
 }
 
@@ -329,7 +329,9 @@ const setElementPositions = () => {
 
     if (historyButtonsWidth) {
       const searchLeftOffset =
-        historyButtonsWidth + (historyButtonLeftOffset || 8);
+        historyButtonsWidth +
+        (historyButtonLeftOffset ?? 8) +
+        config.defaultGap;
 
       setElementPositionProperties("search-container", {
         left: searchLeftOffset,
