@@ -40,6 +40,7 @@ const customStyles = `.Root__top-container,
 .Root__globalNav .main-globalNav-historyButtonsContainer,
 .Root__globalNav .main-globalNav-searchSection,
 .Root__globalNav .main-topBar-topbarContentRight {
+  padding: 0 .25rem !important;
   -webkit-transform: none !important;
   transform: none !important;
 }
@@ -302,6 +303,7 @@ const customStyles = `.Root__top-container,
   padding-inline-start: 0px;
   margin-block-start: 0px;
 }
+.Kgjmt7IX5samBYUpbkBu,
 .B9lb86gGqGGFcSZZ95bA {
   display: none;
 }
