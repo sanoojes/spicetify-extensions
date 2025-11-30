@@ -310,6 +310,10 @@ const customStyles = `.Root__top-container,
 .Root__globalNav.global-libraryX {
   width: 100%;
 }
+.Root:has([data-right-sidebar-hidden=true] .yXlTmwlWtDebsivA1gM6) .Root__globalNav {
+  transition: all .3s ease;
+  grid-column: global-nav/right-sidebar !important;
+}
 `;
 
 const setElementPositions = () => {
