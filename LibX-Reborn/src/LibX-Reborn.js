@@ -45,6 +45,15 @@ const customStyles = `.Root__top-container,
   transform: none !important;
 }
 
+.Root__globalNav .ppjvheuqvs8mmcHwKkK5{
+  padding: 8px 0px 8px 0px !important;
+  margin-inline: 0 !important;
+}
+
+.Root__globalNav .DoxYADBBjYMvoYwl7QPg{
+  margin-inline: 0 !important;
+}
+
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
 .spotify__container--is-desktop.spotify__os--is-windows .Root__globalNav,
 .Root__globalNav {
@@ -144,7 +153,7 @@ const customStyles = `.Root__top-container,
   position: fixed !important;
   display: flex !important;
   top: 0;
-  padding: 0.5rem;
+  padding: 0.5rem !important;
   height: max-content;
   width: max-content;
 }
@@ -303,6 +312,7 @@ const customStyles = `.Root__top-container,
   padding-inline-start: 0px;
   margin-block-start: 0px;
 }
+.OPsY6bKl1_FfA8jFpq1V,
 .Kgjmt7IX5samBYUpbkBu,
 .B9lb86gGqGGFcSZZ95bA {
   display: none;
