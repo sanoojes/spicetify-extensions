@@ -256,7 +256,8 @@ const customStyles = `.Root__top-container,
 }
 
 .main-globalNav-textWrapper {
-  margin-left: 1rem;
+  margin-left: 3.125rem;
+  position: absolute;
 }
 
 .main-globalNav-searchInputSection .main-globalNav-textWrapper {
@@ -264,6 +265,14 @@ const customStyles = `.Root__top-container,
   margin-left: 3.25rem;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.Root__globalNav .search-searchCategory-carouselButton{
+  display: none !important;
+}
+
+.Root__globalNav .search-searchCategory-categoryGrid {
+  mask: none !important;
 }
 
 .main-globalNav-searchText {
