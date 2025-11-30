@@ -324,6 +324,9 @@ const customStyles = `.Root__top-container,
   transition: all .3s ease;
   grid-column: global-nav/right-sidebar !important;
 }
+.Root__cinema-view.E3V79f6uQHeTnFxMhoju._3_LWNvctz6LK865o0Fvg {
+  grid-row: global-nav / right-sidebar !important;
+}
 `;
 
 const setElementPositions = () => {
