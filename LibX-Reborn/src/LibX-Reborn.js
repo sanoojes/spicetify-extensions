@@ -323,6 +323,8 @@ const customStyles = `.Root__top-container,
 }
 .OPsY6bKl1_FfA8jFpq1V,
 .Kgjmt7IX5samBYUpbkBu,
+.ZIgg4O2heaZyD8Z7o7MQ,
+.IEulmRakQT_FgH43ov2a,
 .B9lb86gGqGGFcSZZ95bA {
   display: none;
 }
