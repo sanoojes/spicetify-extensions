@@ -46,7 +46,7 @@ const customStyles = `.Root__top-container,
 }
 
 .Root__globalNav .ppjvheuqvs8mmcHwKkK5{
-  padding: 8px 0px 8px 0px !important;
+  padding: 4px 0px 0px !important;
   margin-inline: 0 !important;
 }
 
