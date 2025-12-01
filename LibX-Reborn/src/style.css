@@ -6,9 +6,13 @@
     "global-nav main-view right-sidebar"
     "left-sidebar main-view right-sidebar"
     "now-playing-bar now-playing-bar now-playing-bar" !important;
-
   grid-template-rows: auto 1fr auto !important;
 }
+.Root__globalNav,
+.Root__globalNav.VWGwIHKvvfu0ry5ZqbxU{
+  grid-area: global-nav !important;
+}
+
 
 #Desktop_LeftSidebar_Id,
 .Root__globalNav {
@@ -18,8 +22,18 @@
 .Root__globalNav .main-globalNav-historyButtonsContainer,
 .Root__globalNav .main-globalNav-searchSection,
 .Root__globalNav .main-topBar-topbarContentRight {
+  padding: 0 .25rem !important;
   -webkit-transform: none !important;
   transform: none !important;
+}
+
+.Root__globalNav .ppjvheuqvs8mmcHwKkK5{
+  padding: 4px 0px 0px !important;
+  margin-inline: 0 !important;
+}
+
+.Root__globalNav .DoxYADBBjYMvoYwl7QPg{
+  margin-inline: 0 !important;
 }
 
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
@@ -121,7 +135,7 @@
   position: fixed !important;
   display: flex !important;
   top: 0;
-  padding: 0.5rem;
+  padding: 0.5rem !important;
   height: max-content;
   width: max-content;
 }
@@ -148,12 +162,13 @@
 .Root__globalNav .main-globalNav-searchContainer > span[role="presentation"],
 .Root__globalNav .main-globalNav-searchContainer > .zugTpa7GhjPIQmTCgBzw,
 .Root__globalNav .main-globalNav-searchContainer .main-globalNav-searchInputSection,
-.Root__globalNav .main-globalNav-searchContainer > form {
+.Root__globalNav .main-globalNav-searchContainer > form,
+.Root__globalNav ._b3hhmbWtOY8_1M1mM1H > form {
   position: fixed;
   top: var(--search-container-top, var(--panel-gap, 0.5rem)) !important;
   left: var(--search-container-left, var(--panel-gap, 0.5rem)) !important;
-  width: 28vw;
-  max-width: 28vw;
+  width: 22rem;
+  max-width: 25vw;
   height: fit-content;
 }
 
@@ -223,7 +238,8 @@
 }
 
 .main-globalNav-textWrapper {
-  margin-left: 1rem;
+  margin-left: 3.125rem;
+  position: absolute;
 }
 
 .main-globalNav-searchInputSection .main-globalNav-textWrapper {
@@ -231,6 +247,14 @@
   margin-left: 3.25rem;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.Root__globalNav .search-searchCategory-carouselButton{
+  display: none !important;
+}
+
+.Root__globalNav .search-searchCategory-categoryGrid {
+  mask: none !important;
 }
 
 .main-globalNav-searchText {
@@ -279,9 +303,20 @@
   padding-inline-start: 0px;
   margin-block-start: 0px;
 }
+.OPsY6bKl1_FfA8jFpq1V,
+.Kgjmt7IX5samBYUpbkBu,
+.ZIgg4O2heaZyD8Z7o7MQ,
+.IEulmRakQT_FgH43ov2a,
 .B9lb86gGqGGFcSZZ95bA {
   display: none;
 }
 .Root__globalNav.global-libraryX {
   width: 100%;
+}
+.Root:has([data-right-sidebar-hidden=true] .yXlTmwlWtDebsivA1gM6) .Root__globalNav {
+  transition: all .3s ease;
+  grid-column: global-nav/right-sidebar !important;
+}
+.Root__cinema-view.E3V79f6uQHeTnFxMhoju._3_LWNvctz6LK865o0Fvg {
+  grid-row: global-nav / right-sidebar !important;
 }
