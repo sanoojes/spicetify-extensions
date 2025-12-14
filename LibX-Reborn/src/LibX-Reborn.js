@@ -325,7 +325,8 @@ const customStyles = `.Root__top-container,
 .Kgjmt7IX5samBYUpbkBu,
 .ZIgg4O2heaZyD8Z7o7MQ,
 .IEulmRakQT_FgH43ov2a,
-.B9lb86gGqGGFcSZZ95bA {
+.B9lb86gGqGGFcSZZ95bA,
+.Il1Yz_P2hpTeJyNf9mi_ {
   display: none;
 }
 .Root__globalNav.global-libraryX {
