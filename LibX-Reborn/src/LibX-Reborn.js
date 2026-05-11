@@ -1,22 +1,12 @@
-const config = {
+const CONFIG = {
   defaultGap: 8,
   globalNavSelector: ".Root__globalNav",
-  libXGlobalNavSelectorClass: "global-libraryX",
-  stylesheetSelectorClass: "libraryX-styles",
+  libXClass: "global-libraryX",
+  stylesheetId: "libraryX-styles",
 };
 
-const checkForGlobalNav = () =>
-  document.querySelector(".globalNav") ||
-  document.querySelector(".Root__globalNav") ||
-  false;
-
-let isWindows = detectOS("win");
-let isMac = detectOS("mac");
-
-let isGlobalNavAvailable = checkForGlobalNav();
-let globalNavElement = getGlobalNavElement();
-
-const customStyles = `.Root__top-container,
+const CUSTOM_CSS = `
+.Root__top-container,
 :root .global-nav .Root__top-container,
 .spotify__container--is-desktop .global-nav .Root__top-container {
   padding-top: 64px !important;
@@ -31,8 +21,6 @@ const customStyles = `.Root__top-container,
   grid-area: global-nav !important;
 }
 
-
-#Desktop_LeftSidebar_Id,
 .Root__globalNav {
   transition: width 0.3s ease;
 }
@@ -52,6 +40,10 @@ const customStyles = `.Root__top-container,
 
 .Root__globalNav .DoxYADBBjYMvoYwl7QPg{
   margin-inline: 0 !important;
+}
+.Root__globalNav .custom-navlinks-scrollable_container div[role="presentation"] {
+  flex-direction: column;
+  width: 100%;
 }
 
 .spotify__container--is-desktop.spotify__os--is-macos .Root__globalNav,
@@ -86,8 +78,11 @@ const customStyles = `.Root__top-container,
   justify-content: unset;
   height: 3.25rem;
   max-height: 3.25rem;
-  padding: 1rem 1rem 1rem 1.125rem;
   border: none !important;
+  margin-inline: 0 !important;
+}
+.Root__globalNav .main-globalNav-navLink{
+  padding: 1rem 1rem 1rem 1.25rem;
 }
 
 .Root__nav-bar .LayoutResizer__resize-bar {
@@ -300,7 +295,6 @@ const customStyles = `.Root__top-container,
 
 .global-libraryX .main-globalNav-searchInputSection {
   min-width: 25vw;
-  /* max-width: 25vw; */
 }
 
 .forceExpandSearchInput .main-globalNav-searchInputContainer .jl5Sca1FSi1bSBIyQ72h,
@@ -315,12 +309,14 @@ const customStyles = `.Root__top-container,
   width: 0 !important;
   height: 0 !important;
 }
+.main-globalNav-historyButtonsWrapper,
 .TTB3lAVAhCK9Apl8quWw {
   -webkit-margin-start: 0px;
   -webkit-padding-start: 0px;
   padding-inline-start: 0px;
   margin-block-start: 0px;
 }
+.main-globalNav-historyButtonsSpacer,
 .OPsY6bKl1_FfA8jFpq1V,
 .Kgjmt7IX5samBYUpbkBu,
 .ZIgg4O2heaZyD8Z7o7MQ,
@@ -341,201 +337,146 @@ const customStyles = `.Root__top-container,
 }
 `;
 
-const setElementPositions = () => {
-  const historyButtonsElement = document.querySelector(
-    `.Root__globalNav .main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons,
-	  .Root__globalNav .main-globalNav-historyButtons`
-  );
-  if (historyButtonsElement) {
-    const historyButtonsWidth =
-      historyButtonsElement.getBoundingClientRect().width || 80;
-
-    const historyButtonLeftOffset =
-      (isWindows ? 64 : isMac ? 80 : 0) + config.defaultGap;
-    if (historyButtonsElement) {
-      setElementPositionProperties("history-button", {
-        left: historyButtonLeftOffset,
-      });
-    }
-
-    if (historyButtonsWidth) {
-      const searchLeftOffset =
-        historyButtonsWidth +
-        (historyButtonLeftOffset ?? 8) +
-        config.defaultGap;
-
-      setElementPositionProperties("search-container", {
-        left: searchLeftOffset,
-        top: config.defaultGap,
-      });
-    }
+class LibXReborn {
+  constructor() {
+    this.navElement = null;
+    this.isWindows = this.detectOS("win");
+    this.isMac = this.detectOS("mac");
+    this.observer = null;
   }
-};
 
-const addButtonText = () => {
-  const buttonElements = document.querySelectorAll(
-    `.Root__globalNav .search-searchCategory-categoryGrid > div > button, 
-	  .Root__globalNav .main-globalNav-link-icon, .Root__globalNav .main-globalNav-navLink`
-  );
+  detectOS(osName) {
+    const os = window.Spicetify?.Platform?.operatingSystem ||
+      window.Spicetify?.Platform?.PlatformData?.os_name || "";
+    return os.toLowerCase().includes(osName.toLowerCase());
+  }
 
-  for (const element of buttonElements) {
-    if (
-      element.querySelector(
-        `.main-globalNav-textWrapper,
-		  .main-globalNav-searchText.encore-text.encore-text-body-medium-bold`
-      )
-    ) {
-      return;
+
+  injectStyles() {
+    let styleElement = document.getElementById(CONFIG.stylesheetId);
+
+    if (!styleElement) {
+      styleElement = document.createElement("style");
+      styleElement.id = CONFIG.stylesheetId;
+      document.head.appendChild(styleElement);
     }
 
-    const newTextElement = document.createElement("div");
-    newTextElement.className =
-      "main-globalNav-searchText encore-text encore-text-body-medium-bold";
-    newTextElement.textContent =
-      element.getAttribute("aria-label") || element.getAttribute("alt") || "";
-    const newTextWrapperElement = document.createElement("span");
-    newTextWrapperElement.className = "main-globalNav-textWrapper";
-    newTextWrapperElement.appendChild(newTextElement);
-
-    element.appendChild(newTextWrapperElement);
+    styleElement.textContent = CUSTOM_CSS;
   }
-};
 
-const addGlobalNavStyles = () => {
-  setElementPositions();
-  addButtonText();
-  addLibXClasses();
-};
+  setElementPositions() {
+    if (!this.navElement) return;
 
-const attachGlobalNavObserver = () => {
-  const globalNavObserver = new MutationObserver(addGlobalNavStyles);
+    const historyContainer = this.navElement.querySelector(
+      ".main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons, .main-globalNav-historyButtons"
+    );
 
-  const globalNavButtonWrapperElement = document.querySelector(
-    ".Root__globalNav .main-globalNav-historyButtonsContainer"
-  );
+    if (!historyContainer) return;
 
-  if (globalNavButtonWrapperElement) {
-    globalNavObserver.observe(globalNavButtonWrapperElement, {
-      childList: true,
-      subtree: true,
+    const width = historyContainer.getBoundingClientRect().width || 80;
+    const osOffset = this.isWindows ? 64 : this.isMac ? 80 : 0;
+    const historyLeft = osOffset + CONFIG.defaultGap;
+
+    this.setCssVar("history-button-left", historyLeft);
+    this.setCssVar("search-container-left", historyLeft + width + CONFIG.defaultGap);
+    this.setCssVar("search-container-top", CONFIG.defaultGap);
+  }
+
+
+  setCssVar(name, value) {
+    this.navElement.style.setProperty(`--${name}`, `${value}px`);
+  }
+
+
+  addButtonText() {
+    const buttonSelectors = [
+      ".search-searchCategory-categoryGrid > div > button",
+      ".main-globalNav-link-icon",
+      ".main-globalNav-navLink"
+    ].map(sel => `${CONFIG.globalNavSelector} ${sel}`).join(", ");
+
+    const buttons = document.querySelectorAll(buttonSelectors);
+
+    buttons.forEach((btn) => {
+      if (btn.querySelector(".main-globalNav-textWrapper, .main-globalNav-searchText")) return;
+
+      const textContent = btn.getAttribute("aria-label") || btn.getAttribute("alt") || "";
+      if (!textContent) return;
+
+      const textElement = document.createElement("div");
+      textElement.className = "main-globalNav-searchText encore-text encore-text-body-medium-bold";
+      textElement.textContent = textContent;
+
+      const wrapperElement = document.createElement("span");
+      wrapperElement.className = "main-globalNav-textWrapper";
+      wrapperElement.appendChild(textElement);
+
+      btn.appendChild(wrapperElement);
     });
-  } else {
-    globalNavObserver.disconnect();
   }
-};
 
-const setElementPositionProperties = (
-  propertyName,
-  position = { left: 0, top: config.defaultGap, right: 0, bottom: 0 }
-) => {
-  if (!globalNavElement) return;
-
-  for (const [key, value] of Object.entries(position)) {
-    globalNavElement.style.setProperty(
-      `--${propertyName}-${key}`,
-      `${value}px`
-    );
+  applyModifications = () => {
+    this.setElementPositions();
+    this.addButtonText();
+    this.navElement?.classList.add(CONFIG.libXClass);
   }
-};
 
-/**
- * Adds libX class name to GlobalNav
- */
-const addLibXClasses = () => {
-  try {
-    globalNavElement = getGlobalNavElement();
-    if (globalNavElement) {
-      globalNavElement.classList.add(config.libXGlobalNavSelectorClass);
+  attachObserver() {
+    const target = this.navElement?.querySelector(".main-globalNav-historyButtonsContainer");
+
+    if (this.observer) this.observer.disconnect();
+
+    if (target) {
+      this.observer = new MutationObserver(this.applyModifications);
+      this.observer.observe(target, { childList: true, subtree: true });
     }
-  } catch (error) {
-    console.error(
-      `[LibX-Reborn] Error adding class to global nav element: ${error.message}`
-    );
-  }
-};
-
-/**
- * Adds custom style sheet for libX
- */
-const addLibXStyleSheet = () => {
-  let styleElement = document.getElementById(
-    `#${config.stylesheetSelectorClass}`
-  );
-  if (!styleElement) {
-    styleElement = document.createElement("style");
-    styleElement.id = config.stylesheetSelectorClass;
-    styleElement.innerHTML = customStyles;
-    document.head.appendChild(styleElement);
-  } else {
-    styleElement.innerHTML = customStyles;
-  }
-};
-
-/**
- * Main const
- */
-(async () => {
-  while (!Spicetify?.showNotification) {
-    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  try {
+
+  async init() {
     console.log("[LibX-Reborn] Running GlobalNav to LibraryX script...");
 
+    const MAX_ATTEMPTS = 3;
     let attempts = 0;
-    const maxAttempts = 3;
 
-    const checkGlobalNav = async () => {
-      isWindows = detectOS("win");
-      isMac = detectOS("mac");
-
-      isGlobalNavAvailable = checkForGlobalNav();
+    const tryLoad = async () => {
+      this.navElement = document.querySelector(CONFIG.globalNavSelector);
       attempts++;
 
-      if (isGlobalNavAvailable) {
-        addLibXStyleSheet(); // add stylesheet
+      if (this.navElement) {
+        this.injectStyles();
+        this.applyModifications();
 
-        addGlobalNavStyles();
-        setTimeout(addGlobalNavStyles, 1000); // just to make sure every thing works
-
-        attachGlobalNavObserver();
-      } else if (attempts < maxAttempts) {
-        // GlobalNav not found, wait and try again
-        console.log("GlobalNav not found, retrying...");
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        checkGlobalNav();
+        setTimeout(this.applyModifications, 1000);
+        this.attachObserver();
+      } else if (attempts < MAX_ATTEMPTS) {
+        console.log("[LibX-Reborn] GlobalNav not found, retrying...");
+        await new Promise(res => setTimeout(res, 1000));
+        await tryLoad();
       } else {
-        const msg =
-          "[LibX-Reborn] GlobalNav to Library Script is not available on this nav mode.";
+        const msg = "[LibX-Reborn] GlobalNav Script is not available on this nav mode.";
         console.error(msg);
-        Spicetify.showNotification(msg, true);
+        window.Spicetify?.showNotification?.(msg, true);
       }
     };
 
-    await checkGlobalNav();
+    await tryLoad();
+  }
+}
+
+(async function main() {
+  while (!window.Spicetify?.showNotification) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  try {
+    const extension = new LibXReborn();
+    await extension.init();
   } catch (error) {
-    const msg = `[LibX-Reborn] Error running GlobalNav to LibraryX script:${error}`;
+    const msg = `[LibX-Reborn] Error: ${error.message}`;
     console.error(msg);
-    Spicetify.showNotification(msg, true);
+    window.Spicetify?.showNotification(msg, true);
   }
 })();
 
-function detectOS(os_name) {
-  if (Spicetify.Platform?.operatingSystem) {
-    return Spicetify.Platform?.operatingSystem
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
-  }
 
-  if (Spicetify.Platform?.PlatformData?.os_name) {
-    return Spicetify.Platform.PlatformData.os_name
-      .toLowerCase()
-      .includes(os_name.toLowerCase());
-  }
-
-  return false;
-}
-
-function getGlobalNavElement() {
-  return document.querySelector(config.globalNavSelector);
-}
