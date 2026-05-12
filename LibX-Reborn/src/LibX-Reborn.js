@@ -341,7 +341,8 @@ class LibXReborn {
     this.navElement = null;
     this.isWindows = this.detectOS("win");
     this.isMac = this.detectOS("mac");
-    this.observer = null;
+    this.mutationObserver = null;
+    this.resizeObserver = null;
   }
 
   detectOS(osName) {
@@ -425,17 +426,27 @@ class LibXReborn {
     this.navElement?.classList.add(CONFIG.libXClass);
   }
 
-  attachObserver() {
+  attachObservers() {
     const target = this.navElement?.querySelector(".main-globalNav-historyButtonsContainer");
 
-    if (this.observer) this.observer.disconnect();
+    if (this.mutationObserver) this.mutationObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
 
     if (target) {
-      this.observer = new MutationObserver(this.applyModifications);
-      this.observer.observe(target, { childList: true, subtree: true });
+      this.mutationObserver = new MutationObserver(this.applyModifications);
+      this.mutationObserver.observe(target, { childList: true, subtree: true });
+    }
+
+    this.resizeObserver = new ResizeObserver(() => {
+      this.applyModifications();
+    });
+
+    if (this.navElement) {
+      this.resizeObserver.observe(this.navElement);
+      const historyButtons = this.navElement.querySelector(".main-globalNav-historyButtons");
+      if (historyButtons) this.resizeObserver.observe(historyButtons);
     }
   }
-
 
   async init() {
     console.log("[LibX-Reborn] Running GlobalNav to LibraryX script...");
@@ -452,7 +463,7 @@ class LibXReborn {
         this.applyModifications();
 
         setTimeout(this.applyModifications, 1000);
-        this.attachObserver();
+        this.attachObservers();
       } else if (attempts < MAX_ATTEMPTS) {
         console.log("[LibX-Reborn] GlobalNav not found, retrying...");
         await new Promise(res => setTimeout(res, 1000));
@@ -482,5 +493,3 @@ class LibXReborn {
     window.Spicetify?.showNotification(msg, true);
   }
 })();
-
-
