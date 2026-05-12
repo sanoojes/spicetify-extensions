@@ -21,10 +21,6 @@ const CUSTOM_CSS = `
   grid-area: global-nav !important;
 }
 
-.Root__globalNav {
-  transition: width 0.3s ease;
-}
-
 .Root__globalNav .main-globalNav-historyButtonsContainer,
 .Root__globalNav .main-globalNav-searchSection,
 .Root__globalNav .main-topBar-topbarContentRight {
@@ -316,7 +312,11 @@ const CUSTOM_CSS = `
   padding-inline-start: 0px;
   margin-block-start: 0px;
 }
-.main-globalNav-historyButtonsSpacer,
+.main-globalNav-historyButtonsSpacer {
+  pointer-events: none;
+  position: fixed; 
+  z-index: -9;
+}
 .OPsY6bKl1_FfA8jFpq1V,
 .Kgjmt7IX5samBYUpbkBu,
 .ZIgg4O2heaZyD8Z7o7MQ,
@@ -329,7 +329,6 @@ const CUSTOM_CSS = `
   width: 100%;
 }
 .Root:has([data-right-sidebar-hidden=true] .yXlTmwlWtDebsivA1gM6) .Root__globalNav {
-  transition: all .3s ease;
   grid-column: global-nav/right-sidebar !important;
 }
 .Root__cinema-view.E3V79f6uQHeTnFxMhoju._3_LWNvctz6LK865o0Fvg {
@@ -368,21 +367,26 @@ class LibXReborn {
     if (!this.navElement) return;
 
     const historyContainer = this.navElement.querySelector(
-      ".main-globalNav-historyButtonsContainer > .main-globalNav-historyButtons, .main-globalNav-historyButtons"
+      ".main-globalNav-historyButtonsContainer .main-globalNav-historyButtons, .main-globalNav-historyButtons"
     );
 
     if (!historyContainer) return;
 
     const width = historyContainer.getBoundingClientRect().width || 80;
-    const osOffset = this.isWindows ? 64 : this.isMac ? 80 : 0;
-    const historyLeft = osOffset + CONFIG.defaultGap;
+
+    const spacerElement = this.navElement.querySelector(".main-globalNav-historyButtonsSpacer");
+    let historyLeft;
+    if (spacerElement) {
+      historyLeft = spacerElement.getBoundingClientRect().width * 2 + 8;
+    } else {
+      const osOffset = this.isWindows ? 64 : this.isMac ? 80 : 0;
+      historyLeft = osOffset + CONFIG.defaultGap;
+    }
 
     this.setCssVar("history-button-left", historyLeft);
     this.setCssVar("search-container-left", historyLeft + width + CONFIG.defaultGap);
     this.setCssVar("search-container-top", CONFIG.defaultGap);
   }
-
-
   setCssVar(name, value) {
     this.navElement.style.setProperty(`--${name}`, `${value}px`);
   }
