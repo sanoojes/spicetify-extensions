@@ -14,5 +14,11 @@
     "main": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/mix-url-fixer/mix-url-fixer.js",
     "readme": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/README.md",
     "tags": ["Daily Mix", "URL Fix", "Image Revert"]
+  },
+  {
+    "name": "Where now playing",
+    "description": "Click the currently playing song's cover to go to where it's playing from.",
+    "main": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/where-now-playing/dist/where-now-playing.js",
+    "readme": "https://cdn.jsdelivr.net/gh/sanoojes/spicetify-extensions@latest/where-now-playing/README.md"
   }
 ]
