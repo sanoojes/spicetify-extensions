@@ -6,11 +6,11 @@
       "name": "where-now-playing",
       "devDependencies": {
         "@spicemod/creator": "latest",
-        "@types/bun": "^1.3.10",
-        "oxlint": "^1.43.0",
+        "@types/bun": "^1.3.14",
+        "oxlint": "^1.74.0",
       },
       "peerDependencies": {
-        "typescript": "^5",
+        "typescript": "^5.9.3",
       },
     },
   },
