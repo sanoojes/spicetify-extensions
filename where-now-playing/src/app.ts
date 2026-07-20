@@ -1,9 +1,12 @@
-import { waitForElement } from "@/utils.ts";
+import { waitForElement,sleep } from "@/utils.ts";
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const PLAYING_BAR = ".Root__right-sidebar, #Desktop_PanelContainer_Id";
+const COVER_BUTTON = ".main-nowPlayingView-coverArtVisualEnhancement a[aria-label^='Now playing'], main-nowPlayingView-coverArtContainer a[data-testid='context-link']";
+const CANVAS_CONTAINER = ".canvasVideoContainerNPV";
+const WIDGET_COVER = ".Root__now-playing-bar .main-nowPlayingWidget-coverArtContainer";
 
 async function main() {
-  while (!Spicetify?.Player?.data || !Spicetify?.Platform?.History) {
+while (!Spicetify?.Player?.data || !Spicetify?.Platform?.History) {
     await sleep(250);
   }
 
@@ -24,10 +27,7 @@ async function main() {
     });
 
     if (type === "list") {
-      const coverButton = document.querySelector<HTMLAnchorElement>(
-        ".main-nowPlayingView-coverArtVisualEnhancement a[aria-label^='Now playing']",
-      );
-
+      const coverButton = document.querySelector(COVER_BUTTON);
       const preservedPath = coverButton?.getAttribute("data-href");
 
       if (preservedPath) {
@@ -49,64 +49,72 @@ async function main() {
       pathname,
       search: search,
     });
-    // console.log(`Spicetify.Platform.History.push({pathname:"${pathname}",search:"${search}"})`)
   }
 
-  const playingBar = await waitForElement<HTMLDivElement>(
-    ".Root__right-sidebar, #Desktop_PanelContainer_Id",
-  );
+  await waitForElement<HTMLDivElement>(PLAYING_BAR);
 
   let lastCoverButton: HTMLAnchorElement | null = null;
   let lastCanvasContainer: HTMLDivElement | null = null;
+  let lastWidgetCover: HTMLButtonElement | null = null;
 
   function hookElements() {
-    const coverButton = playingBar.querySelector<HTMLAnchorElement>(
-      ".main-nowPlayingView-coverArtVisualEnhancement a[aria-label^='Now playing']",
-    );
-
+    const coverButton = document.querySelector<HTMLAnchorElement>(COVER_BUTTON);
     if (coverButton !== lastCoverButton) {
       if (lastCoverButton) {
         lastCoverButton.removeEventListener("click", onNavigate, true);
       }
-
       lastCoverButton = coverButton;
-
       if (coverButton) {
-        if (coverButton.hasAttribute("href")) {
-          coverButton.setAttribute("data-href", coverButton.getAttribute("href")!);
-          coverButton.removeAttribute("href");
-          coverButton.style.cursor = "pointer";
-        }
         coverButton.addEventListener("click", onNavigate, true);
       }
     }
 
-    const canvasContainer = playingBar.querySelector<HTMLDivElement>(".canvasVideoContainerNPV");
+    if (coverButton && coverButton.hasAttribute("href")) {
+      coverButton.setAttribute("data-href", coverButton.getAttribute("href")!);
+      coverButton.removeAttribute("href");
+      coverButton.style.cursor = "pointer";
+    }
 
+    const canvasContainer = document.querySelector<HTMLDivElement>(CANVAS_CONTAINER);
     if (canvasContainer !== lastCanvasContainer) {
       if (lastCanvasContainer) {
         lastCanvasContainer.removeEventListener("dblclick", onNavigate, true);
       }
-
       lastCanvasContainer = canvasContainer;
-
       if (canvasContainer) {
         canvasContainer.style.cursor = "pointer";
         canvasContainer.addEventListener("dblclick", onNavigate, true);
+      }
+    }
+
+    const widgetCover = document.querySelector<HTMLButtonElement>(WIDGET_COVER);
+    if (widgetCover !== lastWidgetCover) {
+      if (lastWidgetCover) {
+        lastWidgetCover.removeEventListener("dblclick", onNavigate, true);
+      }
+      lastWidgetCover = widgetCover;
+      if (widgetCover) {
+        widgetCover.style.cursor = "pointer";
+        widgetCover.addEventListener("dblclick", onNavigate, true);
       }
     }
   }
 
   const observer = new MutationObserver(hookElements);
 
-  observer.observe(playingBar, {
+ const appRoot = document.querySelector(".Root") || document.body;
+  observer.observe(appRoot, {
     childList: true,
     subtree: true,
     attributes: true,
     attributeFilter: ["href", "class"],
   });
 
+  Spicetify.Player.addEventListener("songchange", (e) => {
+    setTimeout(hookElements, 100);
+  });
+
   hookElements();
 }
 
-main()
+main();

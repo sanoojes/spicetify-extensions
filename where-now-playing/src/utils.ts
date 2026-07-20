@@ -22,3 +22,5 @@ export function waitForElement<T extends Element>(
     });
   });
 }
+
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
